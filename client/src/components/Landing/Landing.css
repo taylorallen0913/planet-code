@@ -1,0 +1,49 @@
+.name {
+  font-family: 'Karla', sans-serif;
+  font-weight: bold;
+  font-size: 800%;
+  text-align: center;
+  color: #1b2649;
+}
+
+.subtext {
+  padding:2%;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 200%;
+  text-align: center;
+  color: #eeeeee;
+}
+
+.get-started {
+  margin: 9em;
+}
+
+Link {
+  text-decoration: none;
+}
+
+.outer-container {
+  background-color: #b2b5bd;
+}
+
+button {
+  margin: 0 auto !important;
+  display: block !important;
+}
+
+.skewed-bg {
+  background: #8292ca;
+  color: #FFF;
+  padding: 7em;
+  position: relative;
+  min-height:800px;
+  overflow:hidden;
+}
+.skewed-bg::after {
+content: '';
+position: absolute;
+bottom: -70%; left: 0; right: 0;
+height: 100%;
+background:white;
+transform: skew(0deg, -9deg);
+}
