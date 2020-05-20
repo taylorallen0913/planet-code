@@ -14,9 +14,9 @@ app.use(cors());
 
 // Bodyparser middleware
 app.use(
-  bodyParser.urlencoded({
-    extended: false
-  })
+    bodyParser.urlencoded({
+        extended: false,
+    })
 );
 app.use(bodyParser.json());
 
@@ -26,9 +26,10 @@ app.use(express.static(path.join(__dirname, 'client/build')));
 const db = require('./config/keys').mongoAuth;
 
 // Connect to MongoDB
-mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true }) 
-  .then(() => console.log("MONGO CONNECTED"))
-  .catch((err) => console.log(err));
+mongoose
+    .connect(db, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => console.log('MONGO CONNECTED'))
+    .catch((err) => console.log(err));
 
 // Passport middleware
 app.use(passport.initialize());
@@ -39,12 +40,13 @@ require('./config/passport')(passport);
 // Routes
 app.use('/api/users', users);
 app.use('/api/questions', questions);
-app.use('/api/correct', correct)
+app.use('/api/correct', correct);
 
+// For production
 
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname+'/client/build/index.html'));
-});
+// app.get('*', (req, res) => {
+//     res.sendFile(path.join(__dirname + '/client/build/index.html'));
+// });
 
 const PORT = process.env.PORT || 5000;
 
