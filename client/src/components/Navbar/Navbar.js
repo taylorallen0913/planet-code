@@ -1,78 +1,114 @@
-import React from 'react';
-import './styles.css';
+import React, { useState } from 'react';
+import { Button, Affix, Menu, Drawer, Typography } from 'antd';
+import { UpOutlined, MenuOutlined, ToTopOutlined } from '@ant-design/icons';
+import { Link } from 'react-router-dom';
 
-import { useSelector } from 'react-redux';
+import './styles.css';
+const { Title } = Typography;
 
 const Navbar = () => {
-    const authenticated = useSelector((state) => state.auth.isAuthenticated);
+    const [visible, setVisible] = useState(false);
+
+    const showDrawer = () => setVisible(true);
+    const closeDrawer = () => setVisible(false);
 
     return (
-        <nav
-            className="navbar is-dark is-transparent"
-            role="navigation"
-            aria-label="main navigation"
-        >
-            <div className="navbar-brand">
-                <a className="navbar-item" href="/">
-                    <img src={require('./favicon.ico')} className="nav-logo" />
-                </a>
-
-                <a
-                    role="button"
-                    className="navbar-burger burger"
-                    aria-label="menu"
-                    aria-expanded="false"
-                    data-target="navbarBasicExample"
-                >
-                    <span aria-hidden="true"></span>
-                    <span aria-hidden="true"></span>
-                    <span aria-hidden="true"></span>
-                </a>
-            </div>
-
-            <div id="navbarBasicExample" className="navbar-menu">
-                <div className="navbar-start">
-                    <a className="navbar-item" href="/">
-                        Home
-                    </a>
-                    <a className="navbar-item" href="/about">
-                        About
-                    </a>
-                    <a className="navbar-item" href="/editor-demo">
-                        Editor
-                    </a>
-                    {authenticated ? (
-                        <a className="navbar-item" href="/practice">
-                            Practice
-                        </a>
-                    ) : null}
+        <Affix offsetTop={2}>
+            <nav className="menu">
+                <div className="menu__logo">
+                    <Link to="/" className="menu-name">
+                        Planet Code
+                    </Link>
                 </div>
-
-                <div className="navbar-end">
-                    <div className="navbar-item">
-                        {authenticated ? (
-                            <div>
-                                <a className="navbar-item" href="/dashboard">
-                                    Dashboard
-                                </a>
-                            </div>
-                        ) : (
-                            <div className="buttons">
-                                <a
-                                    className="button is-primary"
-                                    href="/register"
-                                >
-                                    <strong>Sign up</strong>
-                                </a>
-                                <a className="button is-light" href="/login">
-                                    Log in
-                                </a>
-                            </div>
-                        )}
+                <div className="menu__container">
+                    <div className="menu_left">
+                        {/* Left Menu */}
+                        <Menu mode="horizontal">
+                            <Menu.Item key="about" className="menu-no-hover">
+                                <Link to="/about" className="menu-text">
+                                    About
+                                </Link>
+                            </Menu.Item>
+                            <Menu.Item key="editor" className="menu-no-hover">
+                                <Link to="/editor" className="menu-text">
+                                    Editor
+                                </Link>
+                            </Menu.Item>
+                        </Menu>
                     </div>
+                    <div className="menu_right">
+                        {/* Right Menu */}
+                        <Menu mode="horizontal">
+                            <Menu.Item key="log-in" className="menu-no-hover">
+                                <Link to="/login" className="menu-text">
+                                    Log in
+                                </Link>
+                            </Menu.Item>
+                            <Menu.Item key="register" className="menu-no-hover">
+                                <Link to="/register" className="menu-text">
+                                    Sign up
+                                </Link>
+                            </Menu.Item>
+                        </Menu>
+                    </div>
+                    <Button
+                        className="menu__mobile-button"
+                        type="primary"
+                        onClick={showDrawer}
+                    >
+                        <MenuOutlined />
+                    </Button>
+                    <Drawer
+                        height={400}
+                        drawerStyle={{ height: '200%' }}
+                        placement="top"
+                        closable={false}
+                        onClose={closeDrawer}
+                        visible={visible}
+                        title={
+                            <div
+                                style={{ width: '100%', textAlign: 'center' }}
+                                onClick={closeDrawer}
+                            >
+                                <UpOutlined
+                                    style={{ display: 'inline-block' }}
+                                />
+                            </div>
+                        }
+                    >
+                        <div className="drawer-label">
+                            <Button type="link">
+                                <Link to="/about">
+                                    <Title level={3}>About</Title>
+                                </Link>
+                            </Button>
+                        </div>
+                        <div className="drawer-label">
+                            <Button type="link">
+                                <Link to="/editor">
+                                    <Title level={3}>Editor</Title>
+                                </Link>
+                            </Button>
+                        </div>
+
+                        <div className="drawer-label">
+                            <Button type="link">
+                                <Link to="/register">
+                                    <Title level={3}>Sign Up</Title>
+                                </Link>
+                            </Button>
+                        </div>
+                        <div className="drawer-label">
+                            <Button type="link">
+                                <Link to="/login">
+                                    <Title level={3}>Login</Title>
+                                </Link>
+                            </Button>
+                        </div>
+                    </Drawer>
                 </div>
-            </div>
-        </nav>
+            </nav>
+        </Affix>
     );
 };
 

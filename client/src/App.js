@@ -22,8 +22,6 @@ import Practice from './pages/practice';
 import PrivateRoute from './components/PrivateRoute';
 import NoRouteMatch from './pages/noRouteMatch';
 
-import 'bulma/css/bulma.css';
-
 if (localStorage.jwtToken) {
     const token = localStorage.jwtToken;
     setAuthToken(token);

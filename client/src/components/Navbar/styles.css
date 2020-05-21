@@ -1,11 +1,104 @@
-#navbarBasicExample {
-    background-color: #363636;
+@import '~antd/dist/antd.css';
+
+.menu {
+    background-color: #1b1f3b;
+    padding: 0 20px;
+    margin-top: -2px;
+    overflow: hidden;
+    border-bottom: -2px solid transparent !important;
 }
 
-.navbar-item {
+.menu__logo {
+    width: 170px;
+    float: left;
+}
+
+.menu__logo a {
+    display: inline-block;
+    font-size: 20px;
+    padding: 19px 20px;
+}
+
+.menu__container .ant-menu-item {
+    padding: 0px 5px;
+}
+
+.menu__container .ant-menu-submenu-title {
+    padding: 10px 20px;
+}
+
+.menu__container .ant-menu-item a,
+.menu__container .ant-menu-submenu-title a {
+    padding: 10px 15px;
+}
+
+.menu__container .ant-menu-horizontal {
+    line-height: 80px;
+    border-bottom: none;
+}
+
+.menu__container .menu_left {
+    float: left;
+}
+
+.menu__container .menu_right {
+    float: right;
+}
+
+.menu__mobile-button {
+    float: right;
+    height: 32px;
+    width: 32px;
+    padding: 4px;
+    display: none !important;
+    margin-top: 23px !important;
+    margin-right: 10px !important;
+    background: #3e91f7;
+}
+
+.menu_drawer .ant-drawer-body {
+    padding: 0 !important;
+}
+
+@media (max-width: 767px) {
+    .menu__mobile-button {
+        margin-top: 10px;
+        display: inline-block !important;
+    }
+
+    .menu_left,
+    .menu_right {
+        display: none;
+    }
+
+    .menu__container .ant-menu-item,
+    .menu__container .ant-menu-submenu-title {
+        padding: 1px 20px;
+    }
+}
+
+.ant-menu-item {
+    background-color: #1b1f3b;
+}
+
+.ant-menu-item:hover {
+    background-color: #413c58 !important;
+}
+
+.menu-text {
     color: white !important;
 }
 
-a {
-    text-decoration: none !important;
+.menu-no-hover {
+    border-bottom: 2px solid transparent !important;
+    color: inherit !important;
+}
+
+.menu-name {
+    margin-top: 2px;
+    font-size: 1.7em !important;
+}
+
+.drawer-label {
+    margin-bottom: 5%;
 }
