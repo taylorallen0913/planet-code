@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './styles.css';
 import { Controlled as CodeMirror } from 'react-codemirror2';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
-import { Row, Col, Divider } from 'antd';
+import { Row, Col } from 'antd';
+import { getQuestionData } from '../../utils/data';
 import styled from 'styled-components';
 
 require('codemirror/lib/codemirror.css');
@@ -21,24 +22,36 @@ const config = {
 };
 
 const options = {
-    mode: 'python',
-    theme: 'material',
     lineNumbers: true,
     scrollbarStyle: null,
 };
 
 const Editor = (props) => {
     const user = useSelector((state) => state.auth.user);
+    const [questionData, setQuestionData] = useState();
+    const [questionDataLoaded, setQuestionDataLoaded] = useState(false);
     const [value, setValue] = useState();
     const [token, setToken] = useState();
     const [currentLanguage, setCurrentLanguage] = useState(0);
     const [selectionValue, setCollectionValue] = useState();
     const [expectedOutput, setExpectedOutput] = useState(props.expected);
-    const [questionName, setQuestionName] = useState(props.questionName);
     const [questionDescription, setQuestionDescription] = useState(
         props.questionDescription
     );
     const [questionId, setQuestionId] = useState(props.id);
+
+    const setData = async () => {
+        setQuestionData(await getQuestionData(props.match.params.id));
+        setQuestionDataLoaded(true);
+    };
+
+    useEffect(() => {
+        setData();
+    }, []);
+
+    useEffect(() => {
+        console.log(questionData);
+    }, [questionData]);
 
     const submitCode = async () => {
         let token = '';
@@ -200,78 +213,106 @@ const Editor = (props) => {
 
     return (
         <div>
-            <Row>
-                <Col flex={5}>
-                    <div className="question">
-                        <h1 className="question-name">{questionName}</h1>
-                        <p className="question-description">
-                            {questionDescription}
-                        </p>
-                        <br />
-                        <br />
-                        <br />
-                        <br />
-                        <p className="question-description">{props.hint}</p>
-                    </div>
-                </Col>
-                <Col flex={6}>
-                    <div>
-                        <CodeMirror
-                            editorDidMount={(editor) => {
-                                //this.instance = editor;
-                            }}
-                            value={value}
-                            options={options}
-                            styles={{ marginTop: '10%' }}
-                            onBeforeChange={(editor, data, value) => {
-                                setValue(value);
-                            }}
-                            onChange={(editor, data, value) => {
-                                saveCodeToState(value);
-                            }}
-                        />
+            {questionDataLoaded ? (
+                <Row>
+                    <Col flex={5}>
+                        <div className="question">
+                            <h1 className="question-name">
+                                {questionData.name}
+                            </h1>
+                            <p className="question-description">
+                                {questionDescription}
+                            </p>
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <p className="question-description">{props.hint}</p>
+                        </div>
+                    </Col>
+                    <Col flex={6}>
+                        <div>
+                            <Solution>
+                                <SolutionLabel>Solution</SolutionLabel>
+                                <SolutionWrapper>
+                                    <CodeMirror
+                                        editorDidMount={(editor) => {
+                                            //this.instance = editor;
+                                        }}
+                                        value={value}
+                                        options={options}
+                                        styles={{ marginTop: '10%' }}
+                                        onBeforeChange={(
+                                            editor,
+                                            data,
+                                            value
+                                        ) => {
+                                            setValue(value);
+                                        }}
+                                        onChange={(editor, data, value) => {
+                                            saveCodeToState(value);
+                                        }}
+                                    />
+                                </SolutionWrapper>
+                            </Solution>
 
-                        <OutputContainer>
-                            <OutputLabel>Output</OutputLabel>
-                            <OutputBox readOnly />
-                        </OutputContainer>
-                        {/* <div>
+                            <OutputContainer>
+                                <OutputLabel>Output</OutputLabel>
+                                <OutputBox readOnly />
+                            </OutputContainer>
+                            {/* <div>
                             <DebugLabel>Debug</DebugLabel>
                             <DebugBox readOnly />
                         </div> */}
-                        <div className="bottomPart">
-                            <div className="box-one">
-                                <select
-                                    onChange={onSelectionChange}
-                                    id="language-selector"
-                                    className="custom-select select-menu"
-                                    data-live-search="true"
-                                >
-                                    <option selected>Language</option>
-                                    <option value="1">Python</option>
-                                    <option value="2">Javascript</option>
-                                    <option value="5">Java</option>
-                                </select>
-                            </div>
-                            <div className="box-two">
-                                <button
-                                    type="button"
-                                    className="btn btn-primary"
-                                    onClick={runCode}
-                                >
-                                    Run Code
-                                </button>
+                            <div className="bottomPart">
+                                <div className="box-one">
+                                    <select
+                                        onChange={onSelectionChange}
+                                        id="language-selector"
+                                        className="custom-select select-menu"
+                                        data-live-search="true"
+                                    >
+                                        <option selected>Language</option>
+                                        <option value="1">Python</option>
+                                        <option value="2">Javascript</option>
+                                        <option value="5">Java</option>
+                                    </select>
+                                </div>
+                                <div className="box-two">
+                                    <button
+                                        type="button"
+                                        className="btn btn-primary"
+                                        onClick={runCode}
+                                    >
+                                        Run Code
+                                    </button>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </Col>
-            </Row>
+                    </Col>
+                </Row>
+            ) : null}
         </div>
     );
 };
 
+const Solution = styled.div`
+    padding-top: 2%;
+`;
+
+const SolutionLabel = styled.h1`
+    margin: 0;
+    padding: 0;
+    text-align: center;
+`;
+
+const SolutionWrapper = styled.div`
+    border-style: solid;
+    border-color: #0c1618 !important;
+`;
+
 const OutputContainer = styled.div`
-    margin-top: 4%;
+    margin-top: 2%;
 `;
 
 const OutputBox = styled.textarea`

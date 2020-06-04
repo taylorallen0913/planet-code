@@ -21,6 +21,15 @@
     width: 100%;
 }
 
+.CodeMirror {
+    height: 500px !important;
+    overflow: hidden;
+}
+
+.CodeMirror-gutters {
+    background-color: transparent;
+}
+
 .question-name {
     font-family: 'Karla', sans-serif;
     font-weight: bold;

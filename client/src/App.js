@@ -63,12 +63,13 @@ const App = () => {
                     <Route exact path="/editor-demo" component={EditorDemo} />
                     <Route exact path="/register" component={Register} />
                     <Route exact path="/login" component={Login} />
-
+                    <Route exact path="/editor/:id" component={Editor} />
                     {questions.length > 0 &&
                         questions.map(
                             ({ id, name, question, expected, link }) => (
                                 <Route
-                                    path={link}
+                                    exact
+                                    path={`/practice/${link}`}
                                     render={() => (
                                         <Editor
                                             expectedOutput={expected}
