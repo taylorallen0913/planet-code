@@ -1,6 +1,6 @@
-import React from './node_modules/react';
+import React from 'react';
 import './styles.css';
-import { Link } from './node_modules/react-router-dom';
+import { Link } from 'react-router-dom';
 import PersonCoding from './SVGS/PersonCoding';
 import ProgrammerThinking from './SVGS/ProgrammerThinking';
 import Creative from './SVGS/Creative';

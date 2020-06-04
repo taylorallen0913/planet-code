@@ -9,18 +9,17 @@ import { setCurrentUser, logoutUser } from './actions/authActions';
 import { Provider } from 'react-redux';
 import store from './store';
 
-import Editor from './pages/editor/Editor';
+import Editor from './pages/Editor/Editor';
 import Register from './auth/Register';
 import Login from './auth/Login';
-import About from './pages/about';
-import EditorDemo from './pages/editorDemo';
-import Landing from './pages/landing';
-import Dashboard from './pages/dashboard';
+import EditorDemo from './pages/EditorDemo';
+import Landing from './pages/Landing';
+import Dashboard from './pages/Dashboard';
 
 import Navbar from './components/Navbar';
-import Practice from './pages/practice';
+import Practice from './pages/Practice';
 import PrivateRoute from './components/PrivateRoute';
-import NoRouteMatch from './pages/noRouteMatch';
+import NoRouteMatch from './pages/NoRouteMatch';
 
 if (localStorage.jwtToken) {
     const token = localStorage.jwtToken;
@@ -61,7 +60,6 @@ const App = () => {
                 <Switch>
                     <Route exact path="/" component={Landing} />
 
-                    <Route exact path="/about" component={About} />
                     <Route exact path="/editor-demo" component={EditorDemo} />
                     <Route exact path="/register" component={Register} />
                     <Route exact path="/login" component={Login} />

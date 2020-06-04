@@ -1,5 +1,5 @@
-import React from './node_modules/react';
-import Editor from '../editor';
+import React from 'react';
+import Editor from '../Editor';
 
 class EditorDemo extends React.Component {
     render() {

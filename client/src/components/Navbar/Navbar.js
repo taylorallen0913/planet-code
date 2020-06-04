@@ -24,11 +24,6 @@ const Navbar = () => {
                     <div className="menu_left">
                         {/* Left Menu */}
                         <Menu mode="horizontal">
-                            <Menu.Item key="about" className="menu-no-hover">
-                                <Link to="/about" className="menu-text">
-                                    About
-                                </Link>
-                            </Menu.Item>
                             <Menu.Item key="editor" className="menu-no-hover">
                                 <Link to="/editor" className="menu-text">
                                     Editor
@@ -76,13 +71,6 @@ const Navbar = () => {
                             </div>
                         }
                     >
-                        <div className="drawer-label">
-                            <Button type="link">
-                                <Link to="/about">
-                                    <Title level={3}>About</Title>
-                                </Link>
-                            </Button>
-                        </div>
                         <div className="drawer-label">
                             <Button type="link">
                                 <Link to="/editor">
