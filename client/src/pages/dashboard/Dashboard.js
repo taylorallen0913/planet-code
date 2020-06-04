@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { Component } from './node_modules/react';
+import { useSelector, useDispatch } from './node_modules/react-redux';
 import { logoutUser } from '../../actions/authActions';
 
 import './styles.css';

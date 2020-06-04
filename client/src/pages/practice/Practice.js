@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import React, { Component } from './node_modules/react';
+import PropTypes from './node_modules/prop-types';
+import { connect } from './node_modules/react-redux';
+import { Link } from './node_modules/react-router-dom';
 import './styles.css';
 
-const axios = require('axios');
+const axios = require('./node_modules/axios');
 
 class Practice extends Component {
     constructor() {

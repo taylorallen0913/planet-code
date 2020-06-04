@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState } from './node_modules/react';
 import './styles.css';
-import { Controlled as CodeMirror } from 'react-codemirror2';
-import { useSelector } from 'react-redux';
-import axios from 'axios';
+import { Controlled as CodeMirror } from './node_modules/react-codemirror2';
+import { useSelector } from './node_modules/react-redux';
+import axios from './node_modules/axios';
 
-require('codemirror/lib/codemirror.css');
-require('codemirror/theme/material.css');
-require('codemirror/theme/neat.css');
-require('codemirror/mode/xml/xml.js');
-require('codemirror/mode/javascript/javascript.js');
-require('codemirror/mode/python/python.js');
+require('./node_modules/codemirror/lib/codemirror.css');
+require('./node_modules/codemirror/theme/material.css');
+require('./node_modules/codemirror/theme/neat.css');
+require('./node_modules/codemirror/mode/xml/xml.js.js');
+require('./node_modules/codemirror/mode/javascript/javascript.js.js');
+require('./node_modules/codemirror/mode/python/python.js.js');
 
 const config = {
     headers: {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React from './node_modules/react';
 import Editor from '../editor';
 
 class EditorDemo extends React.Component {
