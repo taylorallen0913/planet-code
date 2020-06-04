@@ -25,7 +25,7 @@ const Navbar = () => {
                         {/* Left Menu */}
                         <Menu mode="horizontal">
                             <Menu.Item key="editor" className="menu-no-hover">
-                                <Link to="/editor" className="menu-text">
+                                <Link to="/editor-demo" className="menu-text">
                                     Editor
                                 </Link>
                             </Menu.Item>

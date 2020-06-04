@@ -3,6 +3,8 @@ import './styles.css';
 import { Controlled as CodeMirror } from 'react-codemirror2';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
+import { Row, Col, Divider } from 'antd';
+import styled from 'styled-components';
 
 require('codemirror/lib/codemirror.css');
 require('codemirror/theme/material.css');
@@ -197,64 +199,110 @@ const Editor = (props) => {
     };
 
     return (
-        <div className="uk-grid" uk-grid>
-            <div className="uk-width-1-2">
-                <div className="question">
-                    <h1 className="question-name">{questionName}</h1>
-                    <p className="question-description">
-                        {questionDescription}
-                    </p>
-                    <br />
-                    <br />
-                    <br />
-                    <br />
-                    <p className="question-description">{props.hint}</p>
-                </div>
-            </div>
-            <div className="uk-width-1-2">
-                <CodeMirror
-                    editorDidMount={(editor) => {
-                        //this.instance = editor;
-                    }}
-                    value={value}
-                    options={options}
-                    onBeforeChange={(editor, data, value) => {
-                        setValue(value);
-                    }}
-                    onChange={(editor, data, value) => {
-                        saveCodeToState(value);
-                    }}
-                />
+        <div>
+            <Row>
+                <Col flex={5}>
+                    <div className="question">
+                        <h1 className="question-name">{questionName}</h1>
+                        <p className="question-description">
+                            {questionDescription}
+                        </p>
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <p className="question-description">{props.hint}</p>
+                    </div>
+                </Col>
+                <Col flex={6}>
+                    <div>
+                        <CodeMirror
+                            editorDidMount={(editor) => {
+                                //this.instance = editor;
+                            }}
+                            value={value}
+                            options={options}
+                            styles={{ marginTop: '10%' }}
+                            onBeforeChange={(editor, data, value) => {
+                                setValue(value);
+                            }}
+                            onChange={(editor, data, value) => {
+                                saveCodeToState(value);
+                            }}
+                        />
 
-                <textarea id="output-box" readOnly></textarea>
-                <textarea id="debug-box" readOnly></textarea>
-                <div className="bottomPart">
-                    <div className="box-one">
-                        <select
-                            onChange={onSelectionChange}
-                            id="language-selector"
-                            className="custom-select select-menu"
-                            data-live-search="true"
-                        >
-                            <option selected>Language</option>
-                            <option value="1">Python</option>
-                            <option value="2">Javascript</option>
-                            <option value="5">Java</option>
-                        </select>
+                        <OutputContainer>
+                            <OutputLabel>Output</OutputLabel>
+                            <OutputBox readOnly />
+                        </OutputContainer>
+                        {/* <div>
+                            <DebugLabel>Debug</DebugLabel>
+                            <DebugBox readOnly />
+                        </div> */}
+                        <div className="bottomPart">
+                            <div className="box-one">
+                                <select
+                                    onChange={onSelectionChange}
+                                    id="language-selector"
+                                    className="custom-select select-menu"
+                                    data-live-search="true"
+                                >
+                                    <option selected>Language</option>
+                                    <option value="1">Python</option>
+                                    <option value="2">Javascript</option>
+                                    <option value="5">Java</option>
+                                </select>
+                            </div>
+                            <div className="box-two">
+                                <button
+                                    type="button"
+                                    className="btn btn-primary"
+                                    onClick={runCode}
+                                >
+                                    Run Code
+                                </button>
+                            </div>
+                        </div>
                     </div>
-                    <div className="box-two">
-                        <button
-                            type="button"
-                            className="btn btn-primary"
-                            onClick={runCode}
-                        >
-                            Run Code
-                        </button>
-                    </div>
-                </div>
-            </div>
+                </Col>
+            </Row>
         </div>
     );
 };
+
+const OutputContainer = styled.div`
+    margin-top: 4%;
+`;
+
+const OutputBox = styled.textarea`
+    padding-right: 2em;
+    resize: none;
+    height: 200px;
+    background-color: #000;
+    border: 1px solid #000;
+    color: #00ff00;
+    width: 100%;
+    margin-top: -1%;
+    font-family: courier new;
+`;
+
+const DebugBox = styled.textarea`
+    padding-right: 2em;
+    resize: none;
+    height: 200px;
+    background-color: #000;
+    border: 1px solid #000;
+    color: #00ff00;
+    width: 100%;
+    font-family: courier new;
+`;
+
+const OutputLabel = styled.h1`
+    text-align: center;
+`;
+
+const DebugLabel = styled.h1`
+    text-align: center;
+`;
 
 export default Editor;
