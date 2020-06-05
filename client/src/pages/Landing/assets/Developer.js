@@ -6,8 +6,8 @@ const Developer = () => {
       id="aa7bae02-e79e-4d6b-a496-aba15f39787c"
       data-name="Layer 1"
       xmlns="http://www.w3.org/2000/svg"
-      width="715"
-      height="385.825"
+      width="643.5"
+      height="347.2425"
       viewBox="0 0 1144 617.32"
     >
       <title>developer activity</title>

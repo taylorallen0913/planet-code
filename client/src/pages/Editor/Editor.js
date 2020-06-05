@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+
 import React, { useState, useEffect } from 'react';
 
 import AceEditor from 'react-ace';
@@ -36,7 +38,6 @@ const Editor = (props) => {
   const [codeRunning, setCodeRunning] = useState(false);
 
   useEffect(() => {
-    // eslint-disable-next-line no-use-before-define
     setData();
   }, []);
 

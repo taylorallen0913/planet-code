@@ -31,22 +31,6 @@ button {
   color: #ffffff;
 }
 
-.landing-header {
-  padding: 6% 0 0 0;
-  font-family: 'Montserrat', sans-serif;
-  font-size: 400%;
-  text-align: left;
-  color: white;
-}
-
-.landing-subtext {
-  padding: 0 30% 5% 0%;
-  font-family: 'Montserrat', sans-serif;
-  font-size: 170%;
-  text-align: left;
-  color: #dcdcdc;
-}
-
 #intro {
   width: 100%;
   height: 320vh;
