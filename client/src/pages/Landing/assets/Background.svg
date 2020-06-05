@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920">
+    <defs>
+        <clipPath id="clip-path">
+            <rect id="Rectangle_175" data-name="Rectangle 175" width="2190" height="1894" transform="translate(-0.402)" />
+        </clipPath>
+        <clipPath id="clip-Web_1920_1">
+            <rect width="1920" height="1080" />
+        </clipPath>
+    </defs>
+    <g id="Web_1920_1" data-name="Web 1920 – 1" clip-path="url(#clip-Web_1920_1)">
+        <rect width="1920" height="1080" fill="#fff" />
+        <g id="Web_1920_1-2" data-name="Web 1920 – 1" transform="translate(-134.598 -664)" clip-path="url(#clip-path)">
+            <rect id="Rectangle_174" data-name="Rectangle 174" width="2190" height="1894" transform="translate(-0.402)" fill="#fff" />
+            <ellipse id="Ellipse_1" data-name="Ellipse 1" cx="1374" cy="893" rx="1374" ry="893" transform="translate(-279.402 -382)" fill="#09f" />
+        </g>
+    </g>
+</svg>

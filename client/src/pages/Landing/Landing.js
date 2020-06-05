@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Row, Col, Button } from 'antd';
 import { Link } from 'react-router-dom';
-import BG from './SVGS/BG.svg';
+import Background from './SVGS/Background.svg';
 import Developer from './SVGS/Developer.js';
 import InfoCardOne from '../../components/InfoCards/InfoCardOne';
 import InfoCardTwo from '../../components/InfoCards/InfoCardTwo';
@@ -15,7 +15,7 @@ const Landing = () => {
     return (
         <LandingContainer>
             <Row>
-                <Col flex={3} style={{ margin: '3% 0 0 3%' }}>
+                <Col flex={3} style={{ margin: '3% 0 0 5%' }}>
                     <div style={{ padding: '0 0 0 4%' }}>
                         <h1 className="landing-header">
                             Conquer coding questions
@@ -32,7 +32,7 @@ const Landing = () => {
                 <Col
                     flex={5}
                     style={{
-                        margin: '5% 5% 0 0',
+                        padding: '5% 10% 0 0',
                     }}
                 >
                     <Developer />
@@ -84,10 +84,7 @@ const Landing = () => {
 const LandingContainer = styled.div`
     width: 100%;
     height: 50%;
-    background-image: url(${BG});
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
+    background-image: url(${Background});
     background-size: cover;
 `;
 
