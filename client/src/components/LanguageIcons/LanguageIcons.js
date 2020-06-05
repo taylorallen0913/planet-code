@@ -7,19 +7,17 @@ const LanguageIcons = () => {
   return (
     <LanguageIconContainer>
       <LanguageIcon>
-        <FaPython size="10em" />
+        <FaPython size="10em" color="#000080" />
       </LanguageIcon>
       <LanguageIcon>
-        <FaJava size="10em" />
+        <FaJava size="10em" color="#000080" />
       </LanguageIcon>
       <LanguageIcon>
-        <FaJs size="10em" />
+        <FaJs size="10em" color="#000080" />
       </LanguageIcon>
     </LanguageIconContainer>
   );
 };
-
-export default LanguageIcons;
 
 const LanguageIconContainer = styled.div`
   width: 100%;
@@ -28,4 +26,8 @@ const LanguageIconContainer = styled.div`
   justify-content: center;
 `;
 
-const LanguageIcon = styled.div``;
+const LanguageIcon = styled.div`
+  padding: 0 5% 0 5%;
+`;
+
+export default LanguageIcons;

@@ -9,6 +9,7 @@ import {
 } from '../../components/InfoCards';
 import GetStartedButton from '../../components/GetStartedButton';
 import LanguageIcons from '../../components/LanguageIcons';
+import Footer from '../../components/Footer';
 
 import './styles.css';
 
@@ -43,7 +44,7 @@ const Landing = () => {
           marginBottom: '20%',
         }}
       >
-        <div style={{ marginTop: '7%', backgroundColor: 'transparent' }} />
+        <div style={{ backgroundColor: 'transparent' }} />
 
         <h1
           style={{
@@ -75,6 +76,7 @@ const Landing = () => {
           <InfoCardThree />
         </CardContainer>
       </div>
+      <Footer />
     </LandingContainer>
   );
 };
@@ -82,9 +84,10 @@ const Landing = () => {
 // Containers
 
 const LandingContainer = styled.div`
-  width: 100%;
-  height: 50%;
+  height: 100%;
   background-image: url(${Background});
+  background-position: center;
+  background-repeat: no-repeat;
   background-size: cover;
 `;
 
@@ -102,7 +105,7 @@ const DeveloperContainer = styled.div`
   text-align: left;
 
   @media screen and (max-width: 1500px) {
-    padding: 7% 0 0 0;
+    padding: 5% 0 0 0;
     text-align: center;
   }
 `;
@@ -117,7 +120,7 @@ const ButtonContainer = styled.div`
 `;
 
 const LanguageIconsContainer = styled.div`
-  margin-top: 100px;
+  margin: 13% 0 7% 0;
 `;
 
 const CardContainer = styled.div`

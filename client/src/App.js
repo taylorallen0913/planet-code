@@ -12,7 +12,6 @@ import store from './store';
 import Editor from './pages/Editor/Editor';
 import Register from './auth/Register';
 import Login from './auth/Login';
-// import EditorDemo from './pages/EditorDemo';
 import Landing from './pages/Landing';
 import Dashboard from './pages/Dashboard';
 
