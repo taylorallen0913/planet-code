@@ -12,7 +12,7 @@ import store from './store';
 import Editor from './pages/Editor/Editor';
 import Register from './auth/Register';
 import Login from './auth/Login';
-import EditorDemo from './pages/EditorDemo';
+// import EditorDemo from './pages/EditorDemo';
 import Landing from './pages/Landing';
 import Dashboard from './pages/Dashboard';
 
@@ -60,7 +60,7 @@ const App = () => {
                 <Switch>
                     <Route exact path="/" component={Landing} />
 
-                    <Route exact path="/editor-demo" component={EditorDemo} />
+                    {/* <Route exact path="/editor-demo" component={EditorDemo} /> */}
                     <Route exact path="/register" component={Register} />
                     <Route exact path="/login" component={Login} />
                     <Route exact path="/practice/:id" component={Editor} />

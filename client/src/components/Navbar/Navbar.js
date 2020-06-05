@@ -23,13 +23,13 @@ const Navbar = () => {
                 <div className="menu__container">
                     <div className="menu_left">
                         {/* Left Menu */}
-                        <Menu mode="horizontal">
+                        {/* <Menu mode="horizontal">
                             <Menu.Item key="editor" className="menu-no-hover">
                                 <Link to="/editor-demo" className="menu-text">
                                     Editor
                                 </Link>
                             </Menu.Item>
-                        </Menu>
+                        </Menu> */}
                     </div>
                     <div className="menu_right">
                         {/* Right Menu */}
@@ -71,13 +71,13 @@ const Navbar = () => {
                             </div>
                         }
                     >
-                        <div className="drawer-label">
+                        {/* <div className="drawer-label">
                             <Button type="link">
                                 <Link to="/editor">
                                     <Title level={3}>Editor</Title>
                                 </Link>
                             </Button>
-                        </div>
+                        </div> */}
 
                         <div className="drawer-label">
                             <Button type="link">
