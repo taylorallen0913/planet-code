@@ -7,6 +7,7 @@ import Developer from './SVGS/Developer.js';
 import InfoCardOne from '../../components/InfoCards/InfoCardOne';
 import InfoCardTwo from '../../components/InfoCards/InfoCardTwo';
 import InfoCardThree from '../../components/InfoCards/InfoCardThree';
+import GetStartedButton from '../../components/GetStartedButton';
 
 import './styles.css';
 
@@ -14,11 +15,8 @@ const Landing = () => {
     return (
         <LandingContainer>
             <Row>
-                <Col flex={3} style={{ margin: '0 0 0 3%' }}>
-                    <div
-                        className="col text-center left-side"
-                        style={{ marginLeft: '10%' }}
-                    >
+                <Col flex={3} style={{ margin: '3% 0 0 3%' }}>
+                    <div style={{ padding: '0 0 0 4%' }}>
                         <h1 className="landing-header">
                             Conquer coding questions
                         </h1>
@@ -26,11 +24,9 @@ const Landing = () => {
                             An intuitive learning solution to learning
                             algorithms in an easy and enjoyable manner
                         </h1>
-                        <Link to="/practice" style={{ textDecoration: 'none' }}>
-                            <Button type="primary" size="large" danger>
-                                Get Started
-                            </Button>
-                        </Link>
+                        <div style={{ padding: '0 0 0 25%' }}>
+                            <GetStartedButton />
+                        </div>
                     </div>
                 </Col>
                 <Col
