@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import produce from 'immer';
-import { Row, Col, Select } from 'antd';
+import { Row, Col, Select, Button } from 'antd';
 import Question from '../../components/Question';
 import { getQuestionData } from '../../utils/data';
 import { parseCode } from '../../utils/editor';
@@ -37,6 +37,7 @@ const Editor = (props) => {
         props.questionDescription
     );
     const [questionId, setQuestionId] = useState(props.id);
+    const [codeRunning, setCodeRunning] = useState(false);
 
     useEffect(() => {
         setData();
@@ -332,12 +333,26 @@ const Editor = (props) => {
                                     />
                                 </Solution>
 
-                                <Output>
-                                    <OutputHeader>
-                                        <OutputLabel>Output</OutputLabel>
-                                    </OutputHeader>
-                                    <OutputBox readOnly />
-                                </Output>
+                                {codeRunning ? (
+                                    <Output>
+                                        <OutputHeader>
+                                            <OutputLabel>Output</OutputLabel>
+                                        </OutputHeader>
+                                        <OutputBox readOnly />
+                                    </Output>
+                                ) : null}
+                                <OutputMenu>
+                                    <Button
+                                        type="primary"
+                                        size="large"
+                                        onClick={() => {
+                                            setCodeRunning(!codeRunning);
+                                            console.log('running code...');
+                                        }}
+                                    >
+                                        Run Code
+                                    </Button>
+                                </OutputMenu>
                             </div>
                         </Right>
                     </Col>
@@ -415,6 +430,14 @@ const OutputLabel = styled.h1`
     color: white;
     font-size: 1.7em;
     text-align: center;
+`;
+
+const OutputMenu = styled.div`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-top: 5%;
 `;
 
 export default Editor;

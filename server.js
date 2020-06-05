@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const users = require('./routes/api/users');
 const questions = require('./routes/api/questions');
 const correct = require('./routes/api/correct');
+const judge = require('./routes/api/judge');
 
 const app = express();
 
@@ -36,6 +37,7 @@ require('./config/passport')(passport);
 app.use('/api/users', users);
 app.use('/api/questions', questions);
 app.use('/api/correct', correct);
+app.use('/api/judge', judge);
 
 // For production
 
