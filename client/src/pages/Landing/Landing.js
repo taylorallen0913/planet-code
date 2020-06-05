@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Row, Col, Button } from 'antd';
-import Background from './SVGS/Background.svg';
-import Developer from './SVGS/Developer.js';
+import { Row, Col } from 'antd';
+import Background from './assets/Background.svg';
+import Developer from './assets/Developer';
 import {
   InfoCardOne,
   InfoCardTwo,

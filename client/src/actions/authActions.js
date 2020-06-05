@@ -1,6 +1,6 @@
 import axios from 'axios';
 import setAuthToken from '../utils/setAuthToken';
-import jwt_decode from 'jwt-decode';
+import jwtDecode from 'jwt-decode';
 
 import { GET_ERRORS, SET_CURRENT_USER, USER_LOADING } from './types';
 
@@ -8,7 +8,7 @@ import { GET_ERRORS, SET_CURRENT_USER, USER_LOADING } from './types';
 export const registerUser = (userData, history) => (dispatch) => {
   axios
     .post('/api/users/register', userData)
-    .then((res) => history.push('/login'))
+    .then(() => history.push('/login'))
     .catch((err) =>
       dispatch({
         type: GET_ERRORS,
@@ -30,8 +30,9 @@ export const loginUser = (userData) => (dispatch) => {
       // Set token to Auth header
       setAuthToken(token);
       // Decode token to get user data
-      const decoded = jwt_decode(token);
+      const decoded = jwtDecode(token);
       // Set current user
+      // eslint-disable-next-line no-use-before-define
       dispatch(setCurrentUser(decoded));
     })
     .catch((err) =>

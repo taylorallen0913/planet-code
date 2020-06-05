@@ -24,9 +24,14 @@
     "no-undef": "off",
     "no-unused-vars": "warn",
     "import/prefer-default-export": "off",
-    "react/jsx-closing-bracket-location": [
-      1,
-      { "selfClosing": "line-aligned", "nonEmpty": "after-props" }
-    ]
+    "react/jsx-closing-bracket-location": "off",
+    "no-console": "off",
+    "react/no-unused-state": "off",
+    "react/destructuring-assignment": "off",
+    "no-shadow": "off",
+    "no-use-before-define": "off",
+    "react/jsx-wrap-multilines": "off",
+    "react/no-unescaped-entities": "off",
+    "react/jsx-curly-newline": "off"
   }
 }

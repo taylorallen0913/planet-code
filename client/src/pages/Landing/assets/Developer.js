@@ -1262,14 +1262,14 @@ const Developer = () => {
         d="M830.18,448.27v4.12l-5.88-.57-11.06-11.48S830.35,444.17,830.18,448.27Z"
         transform="translate(-28 -141.34)"
         stroke="#4c4981"
-        stroke-miterlimit="10"
+        strokeMiterlimit="10"
         opacity="0.1"
       />
       <path
         d="M846.13,489.23l-4.12-6.8V455C850.16,470.14,846.13,489.23,846.13,489.23Z"
         transform="translate(-28 -141.34)"
         stroke="#4c4981"
-        stroke-miterlimit="10"
+        strokeMiterlimit="10"
         opacity="0.1"
       />
       <ellipse

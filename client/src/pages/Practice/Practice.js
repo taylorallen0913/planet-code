@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import './styles.css';
@@ -25,7 +24,7 @@ class Practice extends Component {
     axios
       .get('/api/questions/get-questions')
       .then((res) => {
-        this.setState({ questions: res['data'] });
+        this.setState({ questions: res.data });
       })
       .catch((err) => {
         console.log(err);
@@ -47,8 +46,8 @@ class Practice extends Component {
   };
 
   renderTableData = () => {
-    return this.state.questions.map((question, index) => {
-      const { id, name, difficulty, link } = question; //destructuring
+    return this.state.questions.map((question) => {
+      const { id, name, difficulty, link } = question;
       return (
         <tbody>
           <tr key={id}>
@@ -92,10 +91,6 @@ class Practice extends Component {
     );
   }
 }
-
-Practice.propTypes = {
-  auth: PropTypes.object.isRequired,
-};
 
 const mapStateToProps = (state) => ({
   auth: state.auth,

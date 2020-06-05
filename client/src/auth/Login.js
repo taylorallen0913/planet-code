@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { loginUser } from '../actions/authActions';
 import classnames from 'classnames';
@@ -22,6 +21,7 @@ class Login extends Component {
     }
   }
 
+  // eslint-disable-next-line react/no-deprecated
   componentWillReceiveProps(nextProps) {
     if (nextProps.auth.isAuthenticated) {
       this.props.history.push('/dashboard');
@@ -55,6 +55,7 @@ class Login extends Component {
     return (
       <div className="uk-card uk-card-default uk-card-body uk-position-center uk-card-color">
         <h1 className="uk-margin-medium uk-text-center uk-text-bold">Login</h1>
+
         <h6 className="uk-text-center">
           Don't have an account?
           <br />
@@ -107,12 +108,6 @@ class Login extends Component {
     );
   }
 }
-
-Login.propTypes = {
-  loginUser: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired,
-  errors: PropTypes.object.isRequired,
-};
 
 const mapStateToProps = (state) => ({
   auth: state.auth,

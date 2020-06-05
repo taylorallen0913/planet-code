@@ -8,7 +8,7 @@ const InfoCardOne = () => {
     <Card
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
-      hoverable={true}
+      hoverable
       title={
         hover ? (
           <FaCode size="3em" color="#067BC2" />

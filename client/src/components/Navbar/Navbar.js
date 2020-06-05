@@ -4,6 +4,7 @@ import { UpOutlined, MenuOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 
 import './styles.css';
+
 const { Title } = Typography;
 
 const Navbar = () => {
@@ -61,11 +62,11 @@ const Navbar = () => {
             onClose={closeDrawer}
             visible={visible}
             title={
-              <div
-                style={{ width: '100%', textAlign: 'center' }}
-                onClick={closeDrawer}
-              >
-                <UpOutlined style={{ display: 'inline-block' }} />
+              <div style={{ width: '100%', textAlign: 'center' }}>
+                <UpOutlined
+                  style={{ display: 'inline-block' }}
+                  onClick={closeDrawer}
+                />
               </div>
             }
           >

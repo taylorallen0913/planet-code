@@ -8,7 +8,7 @@ const InfoCardTwo = () => {
     <Card
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
-      hoverable={true}
+      hoverable
       title={
         hover ? (
           <FaPlayCircle size="3em" color="#067BC2" />

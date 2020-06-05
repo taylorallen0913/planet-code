@@ -8,7 +8,7 @@ const InfoCardThree = () => {
     <Card
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
-      hoverable={true}
+      hoverable
       title={
         hover ? (
           <FaChartLine size="3em" color="#067BC2" />

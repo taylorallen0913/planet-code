@@ -36,8 +36,8 @@ const Editor = (props) => {
   const [codeRunning, setCodeRunning] = useState(false);
 
   useEffect(() => {
+    // eslint-disable-next-line no-use-before-define
     setData();
-    // eslint-disable-next-line
   }, []);
 
   const setData = async () => {
@@ -57,12 +57,12 @@ const Editor = (props) => {
   };
 
   const createSubmission = async () => {
-    const language_id = getApiLanguageID(currentLanguage);
+    const languageID = getApiLanguageID(currentLanguage);
     await axios
       .post(
         'http://localhost:5000/api/judge/send-submission',
         {
-          language_id,
+          language_id: languageID,
           source_code: formatSolution(),
           expected_output: questionData.expected,
         },
@@ -85,7 +85,7 @@ const Editor = (props) => {
       .post(
         'http://localhost:5000/api/judge/get-submission',
         {
-          token: token,
+          token,
         },
         {
           headers: {
@@ -102,14 +102,16 @@ const Editor = (props) => {
     if (passed)
       document.getElementById('output-box').value = 'Passed all test cases.';
     else
-      document.getElementById('output-box').value =
-        output.message + '\n\n' + output.stderr;
+      document.getElementById(
+        'output-box',
+      ).value = `${output.message}\n\n${output.stderr}`;
   };
 
   const onCodeChange = (val) => {
     setSolutionByLanguage(
       produce(solutionByLanguage, (solutionByLanguageCopy) => {
         const language = getLanguage(currentLanguage).toLowerCase();
+        // eslint-disable-next-line no-param-reassign
         solutionByLanguageCopy[`${language}`] = val;
       }),
     );
@@ -163,7 +165,7 @@ const Editor = (props) => {
     return code;
   };
 
-  const formatSolution = (code) => {
+  const formatSolution = () => {
     let template = parseCode(getCurrentLanguageTemplate());
     template = template.replace('{code}', getCurrentLanguageSolution());
     return template;
@@ -238,8 +240,8 @@ const Editor = (props) => {
                     onChange={onCodeChange}
                     fontSize={15}
                     showPrintMargin={false}
-                    showGutter={true}
-                    highlightActiveLine={true}
+                    showGutter
+                    highlightActiveLine
                     value={getCurrentLanguageSolution()}
                     setOptions={{
                       enableBasicAutocompletion: true,

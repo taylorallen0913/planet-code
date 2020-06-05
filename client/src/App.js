@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import axios from 'axios';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import jwt_decode from 'jwt-decode';
+import jwtDecode from 'jwt-decode';
 import setAuthToken from './utils/setAuthToken';
 
 import { setCurrentUser, logoutUser } from './actions/authActions';
@@ -24,7 +24,7 @@ import NoRouteMatch from './pages/NoRouteMatch';
 if (localStorage.jwtToken) {
   const token = localStorage.jwtToken;
   setAuthToken(token);
-  const decoded = jwt_decode(token);
+  const decoded = jwtDecode(token);
   store.dispatch(setCurrentUser(decoded));
   const currentTime = Date.now() / 1000;
   if (decoded.exp < currentTime) {
@@ -36,20 +36,20 @@ if (localStorage.jwtToken) {
 const App = () => {
   const [questions, setQuestions] = useState([]);
 
-  useEffect(() => {
-    getQuestions();
-  }, []);
-
   const getQuestions = () => {
     axios
       .get('/api/questions/get-questions')
       .then((res) => {
-        setQuestions({ questions: res['data'] });
+        setQuestions({ questions: res.data });
       })
       .catch((err) => {
         console.log(err);
       });
   };
+
+  useEffect(() => {
+    getQuestions();
+  }, []);
 
   return (
     <Provider store={store}>
