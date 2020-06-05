@@ -79,6 +79,8 @@ const Landing = () => {
   );
 };
 
+// Containers
+
 const LandingContainer = styled.div`
   width: 100%;
   height: 50%;
@@ -94,6 +96,68 @@ const LandingTextContainer = styled.div`
     padding: 5% 20% 0 25%;
   }
 `;
+
+const DeveloperContainer = styled.div`
+  padding: 12% 0 0 0;
+  text-align: left;
+
+  @media screen and (max-width: 1500px) {
+    padding: 7% 0 0 0;
+    text-align: center;
+  }
+`;
+
+const ButtonContainer = styled.div`
+  padding: 6% 0 0 25%;
+
+  @media screen and (max-width: 1500px) {
+    text-align: center;
+    padding: 10% 0 0 0;
+  }
+`;
+
+const LanguageIconsContainer = styled.div`
+  margin-top: 100px;
+`;
+
+const CardContainer = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+// Rows
+
+const Row = styled.div`
+  &::after {
+    content: '';
+    display: table;
+    clear: both;
+  }
+`;
+
+// Columns
+
+const LeftColumn = styled.div`
+  float: left;
+  width: 55%;
+
+  @media screen and (max-width: 1500px) {
+    width: 100%;
+  }
+`;
+
+const RightColumn = styled.div`
+  float: left;
+  width: 45%;
+
+  @media screen and (max-width: 1500px) {
+    width: 100%;
+  }
+`;
+
+// Text
 
 const LandingHeader = styled.h1`
   padding: 6% 0 0 0;
@@ -116,62 +180,6 @@ const LandingSubtext = styled.h1`
   @media screen and (max-width: 1500px) {
     text-align: center;
     padding: 0;
-  }
-`;
-
-const ButtonContainer = styled.div`
-  padding: 6% 0 0 25%;
-
-  @media screen and (max-width: 1500px) {
-    text-align: center;
-    padding: 10% 0 0 0;
-  }
-`;
-
-const DeveloperContainer = styled.div`
-  padding: 12% 0 0 0;
-  text-align: left;
-
-  @media screen and (max-width: 1500px) {
-    padding: 7% 0 0 0;
-    text-align: center;
-  }
-`;
-
-const LanguageIconsContainer = styled.div`
-  margin-top: 100px;
-`;
-
-const CardContainer = styled.div`
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-const LeftColumn = styled.div`
-  float: left;
-  width: 55%;
-
-  @media screen and (max-width: 1500px) {
-    width: 100%;
-  }
-`;
-
-const RightColumn = styled.div`
-  float: left;
-  width: 45%;
-
-  @media screen and (max-width: 1500px) {
-    width: 100%;
-  }
-`;
-
-const Row = styled.div`
-  &::after {
-    content: '';
-    display: table;
-    clear: both;
   }
 `;
 
