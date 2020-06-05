@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import AceEditor from 'react-ace';
 import styled from 'styled-components';
-import { useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
 import axios from 'axios';
 import produce from 'immer';
 import { Row, Col, Select, Button } from 'antd';
@@ -23,27 +23,27 @@ import './styles.css';
 const { Option } = Select;
 
 const Editor = (props) => {
-    const user = useSelector((state) => state.auth.user);
+    // const user = useSelector((state) => state.auth.user);
     const [questionData, setQuestionData] = useState();
     const [questionDataLoaded, setQuestionDataLoaded] = useState(false);
-    const [token, setToken] = useState();
+    // const [token, setToken] = useState();
     const [currentLanguage, setCurrentLanguage] = useState(0);
     const [solutionByLanguage, setSolutionByLanguage] = useState({});
-    const [expectedOutput, setExpectedOutput] = useState(props.expected);
-    const [questionDescription, setQuestionDescription] = useState(
-        props.questionDescription
-    );
+    // const [expectedOutput, setExpectedOutput] = useState(props.expected);
+    // const [questionDescription, setQuestionDescription] = useState(
+    // props.questionDescription
+    // );
     const [codeRunning, setCodeRunning] = useState(false);
 
     useEffect(() => {
         setData();
+        // eslint-disable-next-line
     }, []);
 
     const setData = async () => {
         const questionData = await getQuestionData(props.match.params.id);
         setQuestionData(questionData);
         setQuestionDataLoaded(true);
-        // setSolutionByLanguage(questionData.placeholders);
         parsePlaceholderCode(questionData.code.placeholders);
     };
 
@@ -245,7 +245,6 @@ const Editor = (props) => {
                                             width: '100%',
                                         }}
                                         height={450}
-                                        mode="c_cpp"
                                         mode={getTheme()}
                                         theme="twilight"
                                         name="blah2"
@@ -294,7 +293,7 @@ const Editor = (props) => {
     );
 };
 
-const Left = styled.div``;
+// const Left = styled.div``;
 
 const Right = styled.div`
     margin-right: 1%;

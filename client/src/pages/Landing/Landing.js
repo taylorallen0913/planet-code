@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Row, Col, Button, Card } from 'antd';
+import { Row, Col, Button } from 'antd';
 import { Link } from 'react-router-dom';
 import BG from './SVGS/BG.svg';
 import Developer from './SVGS/Developer.js';

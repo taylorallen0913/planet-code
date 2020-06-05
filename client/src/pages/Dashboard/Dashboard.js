@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { logoutUser } from '../../actions/authActions';
 
@@ -15,6 +15,7 @@ const Dashboard = () => {
                         <img
                             className="profile-picture"
                             style={{ width: '20%' }}
+                            alt="profile pic"
                             src="user.png"
                         />
                         <div className="uk-card uk-card-default uk-card-body uk-width-1-2@m">

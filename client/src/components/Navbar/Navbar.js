@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Affix, Menu, Drawer, Typography } from 'antd';
-import { UpOutlined, MenuOutlined, ToTopOutlined } from '@ant-design/icons';
+import { UpOutlined, MenuOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 
 import './styles.css';
