@@ -22,12 +22,20 @@ button {
     color: #ffffff;
 }
 
-.subtext {
-    padding: 4%;
+.landing-header {
+    padding: 6% 0 0 4%;
     font-family: 'Montserrat', sans-serif;
-    font-size: 200%;
-    text-align: center;
-    color: #d4d4d4;
+    font-size: 400%;
+    text-align: left;
+    color: white;
+}
+
+.landing-subtext {
+    padding: 0 30% 5% 4%;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 170%;
+    text-align: left;
+    color: #dcdcdc;
 }
 
 #intro {
