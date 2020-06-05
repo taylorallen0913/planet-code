@@ -17,17 +17,8 @@
     display: inline-block;
 }
 
-.select-menu {
-    width: 100%;
-}
-
-.CodeMirror {
-    height: 500px !important;
-    overflow: hidden;
-}
-
-.CodeMirror-gutters {
-    background-color: transparent;
+.ant-select-arrow {
+    color: #d3d3d3 !important;
 }
 
 .question-name {

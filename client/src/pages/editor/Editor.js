@@ -1,18 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import './styles.css';
-import { Controlled as CodeMirror } from 'react-codemirror2';
+
+import AceEditor from 'react-ace';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
-import { Row, Col } from 'antd';
+import { Row, Col, Select } from 'antd';
 import { getQuestionData } from '../../utils/data';
 import styled from 'styled-components';
 
-require('codemirror/lib/codemirror.css');
-require('codemirror/theme/material.css');
-require('codemirror/theme/neat.css');
-require('codemirror/mode/xml/xml.js');
-require('codemirror/mode/javascript/javascript.js');
-require('codemirror/mode/python/python.js');
+import 'ace-builds/src-noconflict/mode-python';
+import 'ace-builds/src-noconflict/theme-github';
+import 'ace-builds/src-noconflict/theme-twilight';
+import 'ace-builds/src-noconflict/ext-language_tools';
+import './styles.css';
 
 const config = {
     headers: {
@@ -21,10 +20,7 @@ const config = {
     },
 };
 
-const options = {
-    lineNumbers: true,
-    scrollbarStyle: null,
-};
+const { Option } = Select;
 
 const Editor = (props) => {
     const user = useSelector((state) => state.auth.user);
@@ -33,7 +29,6 @@ const Editor = (props) => {
     const [value, setValue] = useState();
     const [token, setToken] = useState();
     const [currentLanguage, setCurrentLanguage] = useState(0);
-    const [selectionValue, setCollectionValue] = useState();
     const [expectedOutput, setExpectedOutput] = useState(props.expected);
     const [questionDescription, setQuestionDescription] = useState(
         props.questionDescription
@@ -43,15 +38,12 @@ const Editor = (props) => {
     const setData = async () => {
         setQuestionData(await getQuestionData(props.match.params.id));
         setQuestionDataLoaded(true);
+        getPlaceholder();
     };
 
     useEffect(() => {
         setData();
     }, []);
-
-    useEffect(() => {
-        console.log(questionData);
-    }, [questionData]);
 
     const submitCode = async () => {
         let token = '';
@@ -183,24 +175,6 @@ const Editor = (props) => {
         setValue(code);
     };
 
-    const onSelectionChange = async () => {
-        // Store language selected into a variable
-        const oldLang = currentLanguage;
-        const selection = getLanguage();
-
-        // Update current language in state to selection
-        setCurrentLanguage(selection);
-        console.log(currentLanguage);
-
-        // Load new code after switch
-    };
-
-    const getLanguage = () => {
-        let e = document.getElementById('language-selector');
-        let language_num = e.options[e.selectedIndex].value;
-        return language_num;
-    };
-
     const questionCorrect = async () => {
         axios
             .post('/api/correct', {
@@ -211,11 +185,55 @@ const Editor = (props) => {
             .catch((err) => console.log(err));
     };
 
+    const onLoad = () => {};
+
+    const onChange = () => {};
+
+    const handleChange = (val) => {
+        setCurrentLanguage(val);
+    };
+
+    const displayLanguage = () => {
+        let language = '';
+        switch (currentLanguage) {
+            case 0:
+                language = 'Language';
+                break;
+            case 1:
+                language = 'Python';
+                break;
+            case 2:
+                language = 'Java';
+                break;
+            case 3:
+                language = 'C++';
+                break;
+            case 4:
+                language = 'Javascript';
+                break;
+            default:
+                language = 'Language';
+                break;
+        }
+        return language;
+    };
+
+    const getPlaceholder = () => {
+        switch (currentLanguage) {
+            case 1:
+                setValue(questionData.python);
+                break;
+            default:
+                setValue('Please select a language');
+                break;
+        }
+    };
+
     return (
         <div>
             {questionDataLoaded ? (
                 <Row>
-                    <Col flex={5}>
+                    <Col flex={3}>
                         <div className="question">
                             <h1 className="question-name">
                                 {questionData.name}
@@ -231,64 +249,62 @@ const Editor = (props) => {
                         </div>
                     </Col>
                     <Col flex={6}>
-                        <div>
-                            <Solution>
-                                <SolutionLabel>Solution</SolutionLabel>
-                                <SolutionWrapper>
-                                    <CodeMirror
-                                        editorDidMount={(editor) => {
-                                            //this.instance = editor;
-                                        }}
+                        <Right>
+                            <div>
+                                <Solution>
+                                    <SolutionHeader>
+                                        <LanguageSelector>
+                                            <Select
+                                                bordered={false}
+                                                value={displayLanguage()}
+                                                style={{
+                                                    width: 120,
+                                                    color: '#D3D3D3',
+                                                }}
+                                                onChange={handleChange}
+                                            >
+                                                <Option value={1}>
+                                                    Python
+                                                </Option>
+                                                <Option value={2}>Java</Option>
+                                                <Option value={3}>C++</Option>
+                                                <Option value={4}>
+                                                    Javascript
+                                                </Option>
+                                            </Select>
+                                        </LanguageSelector>
+                                        <SolutionLabel>Solution</SolutionLabel>
+                                    </SolutionHeader>
+                                    <AceEditor
+                                        style={{ width: '100%' }}
+                                        mode="python"
+                                        theme="twilight"
+                                        name="blah2"
+                                        onLoad={onLoad}
+                                        onChange={onChange}
+                                        fontSize={15}
+                                        showPrintMargin={false}
+                                        showGutter={true}
+                                        highlightActiveLine={true}
                                         value={value}
-                                        options={options}
-                                        styles={{ marginTop: '10%' }}
-                                        onBeforeChange={(
-                                            editor,
-                                            data,
-                                            value
-                                        ) => {
-                                            setValue(value);
-                                        }}
-                                        onChange={(editor, data, value) => {
-                                            saveCodeToState(value);
+                                        setOptions={{
+                                            enableBasicAutocompletion: true,
+                                            enableLiveAutocompletion: true,
+                                            enableSnippets: false,
+                                            showLineNumbers: true,
+                                            tabSize: 2,
                                         }}
                                     />
-                                </SolutionWrapper>
-                            </Solution>
+                                </Solution>
 
-                            <OutputContainer>
-                                <OutputLabel>Output</OutputLabel>
-                                <OutputBox readOnly />
-                            </OutputContainer>
-                            {/* <div>
-                            <DebugLabel>Debug</DebugLabel>
-                            <DebugBox readOnly />
-                        </div> */}
-                            <div className="bottomPart">
-                                <div className="box-one">
-                                    <select
-                                        onChange={onSelectionChange}
-                                        id="language-selector"
-                                        className="custom-select select-menu"
-                                        data-live-search="true"
-                                    >
-                                        <option selected>Language</option>
-                                        <option value="1">Python</option>
-                                        <option value="2">Javascript</option>
-                                        <option value="5">Java</option>
-                                    </select>
-                                </div>
-                                <div className="box-two">
-                                    <button
-                                        type="button"
-                                        className="btn btn-primary"
-                                        onClick={runCode}
-                                    >
-                                        Run Code
-                                    </button>
-                                </div>
+                                <Output>
+                                    <OutputHeader>
+                                        <OutputLabel>Output</OutputLabel>
+                                    </OutputHeader>
+                                    <OutputBox readOnly />
+                                </Output>
                             </div>
-                        </div>
+                        </Right>
                     </Col>
                 </Row>
             ) : null}
@@ -296,53 +312,60 @@ const Editor = (props) => {
     );
 };
 
+const Left = styled.div``;
+
+const Right = styled.div`
+    margin-right: 3%;
+`;
+
 const Solution = styled.div`
-    padding-top: 2%;
+    padding-top: 1%;
+`;
+
+const SolutionHeader = styled.div`
+    display: flex;
+    flex-direction: row;
+    background-color: #444444;
 `;
 
 const SolutionLabel = styled.h1`
-    margin: 0;
-    padding: 0;
-    text-align: center;
+    font-family: 'Lato', sans-serif;
+    color: white;
+    font-size: 1.7em;
+    margin: 1% 0 0 35%;
 `;
 
-const SolutionWrapper = styled.div`
-    border-style: solid;
-    border-color: #0c1618 !important;
+const LanguageSelector = styled.div`
+    padding: 1em 0 1em 2.3em;
+    background-color: #444444;
 `;
 
-const OutputContainer = styled.div`
+const Output = styled.div`
     margin-top: 2%;
 `;
 
-const OutputBox = styled.textarea`
-    padding-right: 2em;
-    resize: none;
-    height: 200px;
-    background-color: #000;
-    border: 1px solid #000;
-    color: #00ff00;
-    width: 100%;
-    margin-top: -1%;
-    font-family: courier new;
+const OutputHeader = styled.div`
+    background-color: #444444;
+    margin: 0;
+    padding: 0;
 `;
 
-const DebugBox = styled.textarea`
-    padding-right: 2em;
+const OutputBox = styled.textarea`
     resize: none;
     height: 200px;
     background-color: #000;
     border: 1px solid #000;
     color: #00ff00;
     width: 100%;
+    margin-top: -1.3%;
     font-family: courier new;
 `;
 
 const OutputLabel = styled.h1`
-    text-align: center;
-`;
-
-const DebugLabel = styled.h1`
+    font-family: 'Lato', sans-serif;
+    padding: 1% 0 1% 0;
+    color: white;
+    font-size: 1.8em;
     text-align: center;
 `;
 
