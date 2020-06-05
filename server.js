@@ -2,7 +2,6 @@ const express = require('express');
 const path = require('path');
 const cors = require('cors');
 const passport = require('passport');
-const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const users = require('./routes/api/users');
 const questions = require('./routes/api/questions');
@@ -12,13 +11,9 @@ const app = express();
 
 app.use(cors());
 
-// Bodyparser middleware
-app.use(
-    bodyParser.urlencoded({
-        extended: false,
-    })
-);
-app.use(bodyParser.json());
+// Parsing middleware
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
 // For development
 app.use(express.static(path.join(__dirname, 'client/build')));

@@ -10,11 +10,9 @@ router.get('/get-questions', (req, res) => {
 });
 
 router.post('/get-question', (req, res) => {
-    console.log(req.body);
     Question.find({ id: req.body.id }, (err, doc) => {
-        if (err) console.log('ERROR');
-        else res.send(doc);
-        console.log(doc);
+        if (err) console.log(err);
+        else res.json(doc);
     });
 });
 
