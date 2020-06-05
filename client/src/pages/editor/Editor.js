@@ -13,6 +13,8 @@ import { compareStrings } from '../../utils/comparison';
 
 import 'ace-builds/src-noconflict/mode-python';
 import 'ace-builds/src-noconflict/mode-java';
+import 'ace-builds/src-noconflict/mode-c_cpp';
+import 'ace-builds/src-noconflict/mode-javascript';
 import 'ace-builds/src-noconflict/theme-github';
 import 'ace-builds/src-noconflict/theme-twilight';
 import 'ace-builds/src-noconflict/ext-language_tools';
@@ -37,10 +39,6 @@ const Editor = (props) => {
         setData();
     }, []);
 
-    // useEffect(() => {
-    //     console.log(solutionByLanguage);
-    // }, [solutionByLanguage]);
-
     const setData = async () => {
         const questionData = await getQuestionData(props.match.params.id);
         setQuestionData(questionData);
@@ -50,8 +48,7 @@ const Editor = (props) => {
     };
 
     const parsePlaceholderCode = (placeholders) => {
-        console.log(Object.keys(placeholders));
-        const code = { python: '', java: '' };
+        const code = { python: '', java: '', 'c++': '', javascript: '' };
         Object.keys(placeholders).forEach((placeholder) => {
             const parsedCode = parseCode(placeholders[placeholder]);
             code[`${placeholder}`] = parsedCode;
@@ -77,7 +74,6 @@ const Editor = (props) => {
             )
             .then((res) => {
                 setTimeout(() => {
-                    console.log(res.data);
                     getSubmission(res.data);
                 }, 2000);
             })
@@ -108,10 +104,10 @@ const Editor = (props) => {
                 'Passed all test cases.';
         else
             document.getElementById('output-box').value =
-                'Did not pass all test cases.';
+                output.message + '\n\n' + output.stderr;
     };
 
-    const onChange = (val) => {
+    const onCodeChange = (val) => {
         setSolutionByLanguage(
             produce(solutionByLanguage, (solutionByLanguageCopy) => {
                 const language = getLanguage(currentLanguage).toLowerCase();
@@ -120,7 +116,7 @@ const Editor = (props) => {
         );
     };
 
-    const handleChange = (val) => {
+    const onLanguageChange = (val) => {
         setCurrentLanguage(val);
     };
 
@@ -132,6 +128,12 @@ const Editor = (props) => {
                 break;
             case 2:
                 code = solutionByLanguage.java;
+                break;
+            case 3:
+                code = solutionByLanguage['c++'];
+                break;
+            case 4:
+                code = solutionByLanguage.javascript;
                 break;
             default:
                 code = 'Please select a language.';
@@ -149,6 +151,12 @@ const Editor = (props) => {
             case 2:
                 code = questionData.code.templates.java;
                 break;
+            case 3:
+                code = questionData.code.templates['c++'];
+                break;
+            case 4:
+                code = questionData.code.templates.javascript;
+                break;
             default:
                 code = 'Please select a language.';
                 break;
@@ -160,6 +168,19 @@ const Editor = (props) => {
         let template = parseCode(getCurrentLanguageTemplate());
         template = template.replace('{code}', getCurrentLanguageSolution());
         return template;
+    };
+
+    const getTheme = () => {
+        let theme;
+        switch (getLanguage(currentLanguage).toLowerCase()) {
+            case 'c++':
+                theme = 'c_cpp';
+                break;
+            default:
+                theme = getLanguage(currentLanguage).toLowerCase();
+                break;
+        }
+        return theme;
     };
 
     return (
@@ -201,7 +222,7 @@ const Editor = (props) => {
                                                         width: 120,
                                                         color: '#D3D3D3',
                                                     }}
-                                                    onChange={handleChange}
+                                                    onChange={onLanguageChange}
                                                 >
                                                     <Option value={1}>
                                                         Python
@@ -224,12 +245,11 @@ const Editor = (props) => {
                                             width: '100%',
                                         }}
                                         height={450}
-                                        mode={getLanguage(
-                                            currentLanguage
-                                        ).toLowerCase()}
+                                        mode="c_cpp"
+                                        mode={getTheme()}
                                         theme="twilight"
                                         name="blah2"
-                                        onChange={onChange}
+                                        onChange={onCodeChange}
                                         fontSize={15}
                                         showPrintMargin={false}
                                         showGutter={true}
