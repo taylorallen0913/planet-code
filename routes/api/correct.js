@@ -1,9 +1,9 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
 
-const User = require("../../models/User");
+const User = require('../../models/User');
 
-router.post("/", async (req, res) => {
+router.post('/', async (req, res) => {
   const userId = req.body.userId;
   const questionId = req.body.questionId;
   let questionList = [];
@@ -16,7 +16,7 @@ router.post("/", async (req, res) => {
   res.sendStatus(200);
 });
 
-router.post("/get", async (req, res) => {
+router.post('/get', async (req, res) => {
   const userId = req.body.userId;
 
   let correctList = [];

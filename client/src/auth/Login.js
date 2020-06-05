@@ -1,49 +1,49 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import { loginUser } from "../actions/authActions";
-import classnames from "classnames";
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { loginUser } from '../actions/authActions';
+import classnames from 'classnames';
 
 class Login extends Component {
   constructor() {
     super();
     this.state = {
-      email: "",
-      password: "",
-      errors: {}
+      email: '',
+      password: '',
+      errors: {},
     };
   }
 
   componentDidMount() {
     // If logged in and user navigates to Login page, should redirect them to dashboard
     if (this.props.auth.isAuthenticated) {
-      this.props.history.push("/dashboard");
+      this.props.history.push('/dashboard');
     }
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.auth.isAuthenticated) {
-      this.props.history.push("/dashboard");
+      this.props.history.push('/dashboard');
     }
 
     if (nextProps.errors) {
       this.setState({
-        errors: nextProps.errors
+        errors: nextProps.errors,
       });
     }
   }
 
-  onChange = e => {
+  onChange = (e) => {
     this.setState({ [e.target.id]: e.target.value });
   };
 
-  onSubmit = e => {
+  onSubmit = (e) => {
     e.preventDefault();
 
     const userData = {
       email: this.state.email,
-      password: this.state.password
+      password: this.state.password,
     };
 
     this.props.loginUser(userData);
@@ -60,7 +60,7 @@ class Login extends Component {
           <br />
           <Link
             to="/register"
-            style={{ textDecoration: "none", textDecorationColor: "black" }}
+            style={{ textDecoration: 'none', textDecorationColor: 'black' }}
           >
             Create an account
           </Link>
@@ -73,8 +73,8 @@ class Login extends Component {
             id="email"
             type="email"
             placeholder="Email"
-            className={classnames("uk-input uk-margin-top", {
-              invalid: errors.email || errors.emailnotfound
+            className={classnames('uk-input uk-margin-top', {
+              invalid: errors.email || errors.emailnotfound,
             })}
           />
           <span className="red-text">
@@ -88,8 +88,8 @@ class Login extends Component {
             id="password"
             type="password"
             placeholder="Password"
-            className={classnames("uk-input uk-margin", {
-              invalid: errors.password || errors.passwordincorrect
+            className={classnames('uk-input uk-margin', {
+              invalid: errors.password || errors.passwordincorrect,
             })}
           />
           <span className="red-text">
@@ -111,12 +111,12 @@ class Login extends Component {
 Login.propTypes = {
   loginUser: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
-  errors: PropTypes.object.isRequired
+  errors: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   auth: state.auth,
-  errors: state.errors
+  errors: state.errors,
 });
 
 export default connect(mapStateToProps, { loginUser })(Login);

@@ -1,28 +1,28 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 // Create Schema
 const QuestionSchema = new Schema({
   id: {
     type: Number,
-    required: true
+    required: true,
   },
   name: {
     type: String,
-    required: true
+    required: true,
   },
   question: {
     type: String,
-    required: true
+    required: true,
   },
   expected: {
     type: String,
-    required: true
+    required: true,
   },
   difficulty: {
     type: Number,
-    required: true
-  }
+    required: true,
+  },
 });
 
-module.exports = Question = mongoose.model("questions", QuestionSchema);
+module.exports = Question = mongoose.model('questions', QuestionSchema);

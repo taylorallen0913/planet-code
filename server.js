@@ -23,9 +23,9 @@ const db = require('./config/keys').mongoAuth;
 
 // Connect to MongoDB
 mongoose
-    .connect(db, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(() => console.log('MONGO CONNECTED'))
-    .catch((err) => console.log(err));
+  .connect(db, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log('MONGO CONNECTED'))
+  .catch((err) => console.log(err));
 
 // Passport middleware
 app.use(passport.initialize());
