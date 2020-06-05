@@ -7,14 +7,15 @@ const router = express.Router();
 const RAPIDAPI_KEY = process.env.RAPIDAPI_KEY;
 
 // Send submission to api and send token back to user
-router.post('/', async (req, res) => {
-    const { language_id, source_code } = req.body;
+router.post('/send-submission', async (req, res) => {
+    const { language_id, source_code, expected_output } = req.body;
     await axios
         .post(
             'https://judge0.p.rapidapi.com/submissions',
             {
                 language_id,
                 source_code,
+                expected_output,
             },
             {
                 headers: {
@@ -32,7 +33,7 @@ router.post('/', async (req, res) => {
 });
 
 // Return results of submission
-router.get('/', async (req, res) => {
+router.post('/get-submission', async (req, res) => {
     const token = req.body.token;
     await axios
         .get(`https://judge0.p.rapidapi.com/submissions/${token}`, {

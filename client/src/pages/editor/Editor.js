@@ -8,20 +8,15 @@ import produce from 'immer';
 import { Row, Col, Select, Button } from 'antd';
 import Question from '../../components/Question';
 import { getQuestionData } from '../../utils/data';
-import { parseCode } from '../../utils/editor';
+import { parseCode, getLanguage, getApiLanguageID } from '../../utils/editor';
+import { compareStrings } from '../../utils/comparison';
 
 import 'ace-builds/src-noconflict/mode-python';
+import 'ace-builds/src-noconflict/mode-java';
 import 'ace-builds/src-noconflict/theme-github';
 import 'ace-builds/src-noconflict/theme-twilight';
 import 'ace-builds/src-noconflict/ext-language_tools';
 import './styles.css';
-
-const config = {
-    headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-    },
-};
 
 const { Option } = Select;
 
@@ -36,205 +31,97 @@ const Editor = (props) => {
     const [questionDescription, setQuestionDescription] = useState(
         props.questionDescription
     );
-    const [questionId, setQuestionId] = useState(props.id);
     const [codeRunning, setCodeRunning] = useState(false);
 
     useEffect(() => {
         setData();
     }, []);
 
-    useEffect(() => {
-        console.log(solutionByLanguage);
-    }, [solutionByLanguage]);
+    // useEffect(() => {
+    //     console.log(solutionByLanguage);
+    // }, [solutionByLanguage]);
 
     const setData = async () => {
         const questionData = await getQuestionData(props.match.params.id);
         setQuestionData(questionData);
         setQuestionDataLoaded(true);
         // setSolutionByLanguage(questionData.placeholders);
-        parsePlaceholderCode(questionData.placeholders);
+        parsePlaceholderCode(questionData.code.placeholders);
     };
 
     const parsePlaceholderCode = (placeholders) => {
+        console.log(Object.keys(placeholders));
+        const code = { python: '', java: '' };
         Object.keys(placeholders).forEach((placeholder) => {
             const parsedCode = parseCode(placeholders[placeholder]);
-            setSolutionByLanguage(
-                produce(solutionByLanguage, (solutionByLanguageCopy) => {
-                    solutionByLanguageCopy[placeholder] = parsedCode;
-                })
-            );
+            code[`${placeholder}`] = parsedCode;
         });
+        setSolutionByLanguage(code);
     };
 
-    // const submitCode = async () => {
-    //     let token = '';
+    const createSubmission = async () => {
+        const language_id = getApiLanguageID(currentLanguage);
+        await axios
+            .post(
+                'http://localhost:5000/api/judge/send-submission',
+                {
+                    language_id,
+                    source_code: formatSolution(),
+                    expected_output: questionData.expected,
+                },
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                }
+            )
+            .then((res) => {
+                setTimeout(() => {
+                    console.log(res.data);
+                    getSubmission(res.data);
+                }, 2000);
+            })
+            .catch((err) => console.log(err));
+    };
 
-    //     // Get coding language selected
-    //     let e = document.getElementById('language-selector');
-    //     var language_num = e.options[e.selectedIndex].value;
-    //     var language = 0;
-    //     if (language_num == 1) {
-    //         // Python
-    //         language = 71;
-    //     } else if (language_num == 2) {
-    //         // Javascript
-    //         language = 63;
-    //     } else if (language_num == 3) {
-    //         // C++
-    //         language = 54;
-    //     } else if (language_num == 4) {
-    //         // C#
-    //         language = 51;
-    //     } else if (language_num == 5) {
-    //         // Java
-    //         language = 62;
-    //     }
+    const getSubmission = async (token) => {
+        await axios
+            .post(
+                'http://localhost:5000/api/judge/get-submission',
+                {
+                    token: token,
+                },
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                }
+            )
+            .then((res) => checkOutput(res.data))
+            .catch((err) => console.log(err));
+    };
 
-    //     const reqBody = {
-    //         source_code: value,
-    //         language_id: language,
-    //     };
+    const checkOutput = (output) => {
+        const passed = compareStrings(output.stdout, questionData.expected);
+        if (passed)
+            document.getElementById('output-box').value =
+                'Passed all test cases.';
+        else
+            document.getElementById('output-box').value =
+                'Did not pass all test cases.';
+    };
 
-    //     if (expectedOutput != '') {
-    //         reqBody.expected_output = expectedOutput;
-    //     }
-
-    //     // Request to submit source code and langauge, start compilation
-    //     await axios
-    //         .post(
-    //             'https://cors-anywhere.herokuapp.com/https://api.judge0.com/submissions/?base64_encoded=false&wait=false',
-    //             reqBody
-    //         )
-    //         .then(
-    //             (response) => {
-    //                 console.log(response);
-    //                 setToken(response.data.token);
-    //             },
-    //             (error) => {
-    //                 console.log(error);
-    //             }
-    //         );
-
-    //     setTimeout(compileCode, 3000);
-    // };
-
-    // const compileCode = async () => {
-    //     let statusCode = -1;
-
-    //     let COMPILE_URL =
-    //         'https://cors-anywhere.herokuapp.com/https://api.judge0.com/submissions/' +
-    //         token +
-    //         '?base64_encoded=false&fields=stdout,stderr,status_id,language_id';
-    //     await axios.get(COMPILE_URL, config).then(
-    //         (response) => {
-    //             changeOutput(response.data.stdout);
-    //             statusCode = response.data.status_id;
-    //         },
-    //         (error) => {
-    //             console.log(error);
-    //         }
-    //     );
-    //     if (statusCode === 1) {
-    //         console.log('In Queue');
-    //     }
-    //     if (statusCode === 2) {
-    //         console.log('Processing');
-    //     }
-    //     if (statusCode === 3) {
-    //         if (expectedOutput != '') {
-    //             questionCorrect();
-    //             changeDebug('Your answer was correct.');
-    //         } else {
-    //             changeDebug('Your program compiled and ran successfully.');
-    //         }
-    //     }
-    //     if (statusCode === 4) {
-    //         console.log('Wrong Answer');
-    //         changeDebug('Your answer was incorrect.');
-    //     }
-    //     if (statusCode === 5) {
-    //         console.log('Time Limit Exceeded');
-    //         changeOutput('Error.');
-    //         changeDebug('The time limit was exceeded.');
-    //     }
-    //     if (statusCode === 6) {
-    //         console.log('Compilation Error');
-    //         changeOutput('Error.');
-    //         changeDebug('Error during compiling.');
-    //     }
-    //     if (statusCode >= 7 && statusCode <= 12) {
-    //         console.log('Runtime Error');
-    //         changeOutput('Error.');
-    //         changeDebug('Runtime error occured.');
-    //     }
-    //     if (statusCode === 13) {
-    //         console.log('Internal Error');
-    //         changeOutput('Error.');
-    //         changeDebug('Internal error occured.');
-    //     }
-    //     if (statusCode === 14) {
-    //         console.log('Exec Format Error');
-    //         changeOutput('Error.');
-    //         changeDebug('Exec format error occured.');
-    //     }
-    // };
-
-    // const changeOutput = (o) => {
-    //     document.getElementById('output-box').value = o;
-    // };
-
-    // const changeDebug = (o) => {
-    //     document.getElementById('debug-box').value = o;
-    // };
-
-    // const runCode = () => {
-    //     changeDebug('Compiling...');
-    //     submitCode();
-    // };
-
-    // const saveCodeToState = (code) => {
-    //     setValue(code);
-    // };
-
-    // const questionCorrect = async () => {
-    //     axios
-    //         .post('/api/correct', {
-    //             userId: user.id,
-    //             questionId: props.questionId,
-    //         })
-    //         .then((res) => {})
-    //         .catch((err) => console.log(err));
-    // };
-
-    const onLoad = () => {};
-
-    const onChange = () => {};
+    const onChange = (val) => {
+        setSolutionByLanguage(
+            produce(solutionByLanguage, (solutionByLanguageCopy) => {
+                const language = getLanguage(currentLanguage).toLowerCase();
+                solutionByLanguageCopy[`${language}`] = val;
+            })
+        );
+    };
 
     const handleChange = (val) => {
         setCurrentLanguage(val);
-        // Set code value to new language code in state
-    };
-
-    const displayLanguage = () => {
-        let language = '';
-        switch (currentLanguage) {
-            case 0:
-                language = 'Language';
-                break;
-            case 1:
-                language = 'Python';
-                break;
-            case 2:
-                language = 'Java';
-                break;
-            case 3:
-                language = 'C++';
-                break;
-            case 4:
-                language = 'Javascript';
-                break;
-        }
-        return language;
     };
 
     const getCurrentLanguageSolution = () => {
@@ -243,11 +130,36 @@ const Editor = (props) => {
             case 1:
                 code = solutionByLanguage.python;
                 break;
+            case 2:
+                code = solutionByLanguage.java;
+                break;
             default:
                 code = 'Please select a language.';
                 break;
         }
         return code;
+    };
+
+    const getCurrentLanguageTemplate = () => {
+        let code;
+        switch (currentLanguage) {
+            case 1:
+                code = questionData.code.templates.python;
+                break;
+            case 2:
+                code = questionData.code.templates.java;
+                break;
+            default:
+                code = 'Please select a language.';
+                break;
+        }
+        return code;
+    };
+
+    const formatSolution = (code) => {
+        let template = parseCode(getCurrentLanguageTemplate());
+        template = template.replace('{code}', getCurrentLanguageSolution());
+        return template;
     };
 
     return (
@@ -282,15 +194,14 @@ const Editor = (props) => {
                                             <LanguageSelector>
                                                 <Select
                                                     bordered={false}
-                                                    value={displayLanguage()}
+                                                    value={getLanguage(
+                                                        currentLanguage
+                                                    )}
                                                     style={{
                                                         width: 120,
                                                         color: '#D3D3D3',
                                                     }}
                                                     onChange={handleChange}
-                                                    onClick={() =>
-                                                        console.log('clicked')
-                                                    }
                                                 >
                                                     <Option value={1}>
                                                         Python
@@ -313,10 +224,11 @@ const Editor = (props) => {
                                             width: '100%',
                                         }}
                                         height={450}
-                                        mode="python"
+                                        mode={getLanguage(
+                                            currentLanguage
+                                        ).toLowerCase()}
                                         theme="twilight"
                                         name="blah2"
-                                        onLoad={onLoad}
                                         onChange={onChange}
                                         fontSize={15}
                                         showPrintMargin={false}
@@ -338,7 +250,7 @@ const Editor = (props) => {
                                         <OutputHeader>
                                             <OutputLabel>Output</OutputLabel>
                                         </OutputHeader>
-                                        <OutputBox readOnly />
+                                        <OutputBox readOnly id="output-box" />
                                     </Output>
                                 ) : null}
                                 <OutputMenu>
@@ -346,8 +258,8 @@ const Editor = (props) => {
                                         type="primary"
                                         size="large"
                                         onClick={() => {
-                                            setCodeRunning(!codeRunning);
-                                            console.log('running code...');
+                                            setCodeRunning(true);
+                                            createSubmission();
                                         }}
                                     >
                                         Run Code
