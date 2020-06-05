@@ -274,33 +274,44 @@ const Editor = (props) => {
                             <div>
                                 <Solution>
                                     <SolutionHeader>
-                                        <LanguageSelector>
-                                            <Select
-                                                bordered={false}
-                                                value={displayLanguage()}
-                                                style={{
-                                                    width: 120,
-                                                    color: '#D3D3D3',
-                                                }}
-                                                onChange={handleChange}
-                                            >
-                                                <Option value={1}>
-                                                    Python
-                                                </Option>
-                                                <Option value={2}>Java</Option>
-                                                <Option value={3}>C++</Option>
-                                                <Option value={4}>
-                                                    Javascript
-                                                </Option>
-                                            </Select>
-                                        </LanguageSelector>
-                                        <SolutionLabel>Solution</SolutionLabel>
+                                        <SolutionLabelContainer>
+                                            <SolutionLabel>
+                                                Solution
+                                            </SolutionLabel>
+                                            <LanguageSelector>
+                                                <Select
+                                                    bordered={false}
+                                                    value={displayLanguage()}
+                                                    style={{
+                                                        width: 120,
+                                                        color: '#D3D3D3',
+                                                    }}
+                                                    onChange={handleChange}
+                                                    onClick={() =>
+                                                        console.log('clicked')
+                                                    }
+                                                >
+                                                    <Option value={1}>
+                                                        Python
+                                                    </Option>
+                                                    <Option value={2}>
+                                                        Java
+                                                    </Option>
+                                                    <Option value={3}>
+                                                        C++
+                                                    </Option>
+                                                    <Option value={4}>
+                                                        Javascript
+                                                    </Option>
+                                                </Select>
+                                            </LanguageSelector>
+                                        </SolutionLabelContainer>
                                     </SolutionHeader>
                                     <AceEditor
                                         style={{
                                             width: '100%',
-                                            whiteSpace: 'pre-line',
                                         }}
+                                        height={450}
                                         mode="python"
                                         theme="twilight"
                                         name="blah2"
@@ -339,7 +350,7 @@ const Editor = (props) => {
 const Left = styled.div``;
 
 const Right = styled.div`
-    margin-right: 3%;
+    margin-right: 1%;
 `;
 
 const Solution = styled.div`
@@ -347,31 +358,45 @@ const Solution = styled.div`
 `;
 
 const SolutionHeader = styled.div`
-    display: flex;
-    flex-direction: row;
     background-color: #444444;
+    height: 60px;
+    position: relative;
+`;
+
+const SolutionLabelContainer = styled.div`
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
 `;
 
 const SolutionLabel = styled.h1`
     font-family: 'Lato', sans-serif;
+    padding-top: 0.9%;
     color: white;
-    font-size: 1.75em;
-    margin: 1% 0 0 31%;
+    font-size: 1.7em;
+    text-align: center;
 `;
 
 const LanguageSelector = styled.div`
-    padding: 1em 0 1em 2.3em;
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding-top: 1%;
+    padding-left: 2.5%;
     background-color: #444444;
 `;
 
 const Output = styled.div`
-    margin-top: 0%;
+    margin-top: 1%;
 `;
 
 const OutputHeader = styled.div`
     background-color: #444444;
     margin: 0;
     padding: 0;
+    height: 60px;
 `;
 
 const OutputBox = styled.textarea`
@@ -381,15 +406,14 @@ const OutputBox = styled.textarea`
     border: 1px solid #000;
     color: #00ff00;
     width: 100%;
-    margin-top: -1.3%;
     font-family: courier new;
 `;
 
 const OutputLabel = styled.h1`
     font-family: 'Lato', sans-serif;
-    padding: 1% 0 1% 0;
+    padding-top: 0.9%;
     color: white;
-    font-size: 1.8em;
+    font-size: 1.7em;
     text-align: center;
 `;
 
