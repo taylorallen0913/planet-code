@@ -1,13 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Row, Col, Button } from 'antd';
+import { Row, Col, Button, Card } from 'antd';
 import { Link } from 'react-router-dom';
-import PersonCoding from './SVGS/PersonCoding';
-import ProgrammerThinking from './SVGS/ProgrammerThinking';
-import Creative from './SVGS/Creative';
-import Office from './SVGS/Office';
 import BG from './SVGS/BG.svg';
 import Developer from './SVGS/Developer.js';
+import InfoCardOne from '../../components/InfoCards/InfoCardOne';
+import InfoCardTwo from '../../components/InfoCards/InfoCardTwo';
+import InfoCardThree from '../../components/InfoCards/InfoCardThree';
 
 import './styles.css';
 
@@ -43,50 +42,45 @@ const Landing = () => {
                     <Developer />
                 </Col>
             </Row>
-            <div style={{ marginTop: '500px' }} />
-            <Row>
-                <Col flex={5}>
-                    <ProgrammerThinking />
-                </Col>
-                <Col flex={5}>
-                    <h1 className="caption">
-                        Learn how to think like a programmer
-                    </h1>
-                    <p className="sub-caption">
-                        To master programming, you first need to master how to
-                        think like a programmer. Thinking in terms of algorithms
-                        teaches us this.
-                    </p>
-                </Col>
-            </Row>
-            <Row>
-                <Col flex={5}>
-                    <h1 className="caption">Land your dream programming job</h1>
-                    <p className="sub-caption">
-                        An adept understanding of data structures and algorithms
-                        is fundamental to crushing the coding interview and
-                        getting your dream job.
-                    </p>
-                </Col>
-                <Col flex={5}>
-                    <Office />
-                </Col>
-            </Row>
-            <Row>
-                <Col flex={5}>
-                    <Creative />
-                </Col>
-                <Col flex={5}>
-                    <h1 className="caption">
-                        Build your problem solving abilities
-                    </h1>
-                    <p className="sub-caption">
-                        Programming is a puzzle and you need to solve it to
-                        reach your solution. Learning algorithms gives you a
-                        backbone in how you approach your solution.
-                    </p>
-                </Col>
-            </Row>
+            <div
+                style={{
+                    backgroundImage:
+                        'linear-gradient(180deg, #FFFFFF 0%, #f2f3fa 100%)',
+                    marginBottom: '20%',
+                }}
+            >
+                <div style={{ marginTop: '20%' }} />
+                <h1
+                    style={{
+                        fontSize: '4em',
+                        textAlign: 'center',
+                        marginLeft: '20%',
+                        marginRight: '20%',
+                    }}
+                >
+                    Progress your skills
+                </h1>
+                <h1
+                    style={{
+                        textAlign: 'center',
+                        marginLeft: '20%',
+                        marginRight: '20%',
+                        color: '#0B3954',
+                    }}
+                >
+                    Planet Code aims to teach the fundamentals of data structure
+                    and algorithm to prepare you for programming competitions or
+                    interviews
+                </h1>
+                <div style={{ marginTop: '5%' }} />
+                <CardContainer>
+                    <InfoCardOne />
+                    <div style={{ marginLeft: '3%', marginRight: '3%' }} />
+                    <InfoCardTwo />
+                    <div style={{ marginLeft: '3%', marginRight: '3%' }} />
+                    <InfoCardThree />
+                </CardContainer>
+            </div>
         </LandingContainer>
     );
 };
@@ -99,6 +93,13 @@ const LandingContainer = styled.div`
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
+`;
+
+const CardContainer = styled.div`
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 `;
 
 export default Landing;

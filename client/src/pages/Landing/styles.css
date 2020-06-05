@@ -1,3 +1,12 @@
+.launch-card {
+    box-shadow: 3px 3px 10px 0.5px rgba(0, 0, 0, 0.1);
+}
+
+.launch-card:hover {
+    transition: all 600ms;
+    transform: translateY(-10px);
+}
+
 .get-started {
     margin: 9em;
 }
