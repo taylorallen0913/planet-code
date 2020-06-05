@@ -1,12 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Row, Col, Button } from 'antd';
-import { Link } from 'react-router-dom';
 import Background from './SVGS/Background.svg';
 import Developer from './SVGS/Developer.js';
-import InfoCardOne from '../../components/InfoCards/InfoCardOne';
-import InfoCardTwo from '../../components/InfoCards/InfoCardTwo';
-import InfoCardThree from '../../components/InfoCards/InfoCardThree';
+import {
+    InfoCardOne,
+    InfoCardTwo,
+    InfoCardThree,
+} from '../../components/InfoCards';
 import GetStartedButton from '../../components/GetStartedButton';
 
 import './styles.css';
