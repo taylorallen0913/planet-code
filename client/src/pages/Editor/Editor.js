@@ -61,7 +61,7 @@ const Editor = (props) => {
     const languageID = getApiLanguageID(currentLanguage);
     await axios
       .post(
-        'http://localhost:5000/api/judge/send-submission',
+        '/api/judge/send-submission',
         {
           language_id: languageID,
           source_code: formatSolution(),
@@ -84,7 +84,7 @@ const Editor = (props) => {
   const getSubmission = async (token) => {
     await axios
       .post(
-        'http://localhost:5000/api/judge/get-submission',
+        '/api/judge/get-submission',
         {
           token,
         },

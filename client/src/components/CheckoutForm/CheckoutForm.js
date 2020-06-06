@@ -48,7 +48,7 @@ const CheckoutForm = ({ success }) => {
     // };
 
     axios
-      .post('http://localhost:5000/api/checkout/charge', {
+      .post('/api/checkout/charge', {
         id: paymentMethod.id,
         amount: 100,
       })

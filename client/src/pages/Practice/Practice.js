@@ -22,7 +22,7 @@ const Practice = () => {
 
   const getCompleteQuestions = () => {
     axios
-      .post('http://localhost:5000/api/correct/get', {
+      .post('/api/correct/get', {
         userId: user.id,
       })
       .then((res) => {
@@ -33,7 +33,7 @@ const Practice = () => {
 
   const getAllQuestions = () => {
     axios
-      .get('http://localhost:5000/api/questions/get-questions')
+      .get('/api/questions/get-questions')
       .then((res) => {
         setQuestions(res.data);
       })
