@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import axios from 'axios';
+
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import jwtDecode from 'jwt-decode';
 import setAuthToken from './utils/setAuthToken';
@@ -14,6 +15,7 @@ import Register from './auth/Register';
 import Login from './auth/Login';
 import Landing from './pages/Landing';
 import Dashboard from './pages/Dashboard';
+import Checkout from './pages/Checkout';
 
 import Navbar from './components/Navbar';
 import Practice from './pages/Practice';
@@ -59,9 +61,9 @@ const App = () => {
         <Switch>
           <Route exact path="/" component={Landing} />
 
-          {/* <Route exact path="/editor-demo" component={EditorDemo} /> */}
           <Route exact path="/register" component={Register} />
           <Route exact path="/login" component={Login} />
+          <Route exact path="/checkout" component={Checkout} />
           <Route exact path="/practice/:id" component={Editor} />
           {questions.length > 0 &&
             questions.map(({ id, name, question, expected, link }) => (

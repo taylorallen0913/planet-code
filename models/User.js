@@ -26,13 +26,11 @@ const UserSchema = new Schema({
   },
   questions: {
     type: Array,
-    default: ['0'],
     required: true,
   },
-  points: {
+  subscription: {
     type: Number,
     default: 0,
-    required: true,
   },
 });
 

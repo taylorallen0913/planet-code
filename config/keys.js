@@ -13,4 +13,5 @@ mongoURI =
 module.exports = {
   mongoAuth: mongoURI,
   secretOrKey: 'secret',
+  stripeSecret: process.env.SECRET_KEY,
 };

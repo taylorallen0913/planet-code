@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Button, Affix, Menu, Drawer, Typography } from 'antd';
 import { UpOutlined, MenuOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
@@ -8,6 +9,7 @@ import './styles.css';
 const { Title } = Typography;
 
 const Navbar = () => {
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const [visible, setVisible] = useState(false);
 
   const showDrawer = () => setVisible(true);
@@ -24,6 +26,15 @@ const Navbar = () => {
         <div className="menu__container">
           <div className="menu_left">
             {/* Left Menu */}
+            {isAuthenticated && (
+              <Menu mode="horizontal">
+                <Menu.Item key="editor" className="menu-no-hover">
+                  <Link to="/editor-demo" className="menu-text">
+                    Practice
+                  </Link>
+                </Menu.Item>
+              </Menu>
+            )}
             {/* <Menu mode="horizontal">
                             <Menu.Item key="editor" className="menu-no-hover">
                                 <Link to="/editor-demo" className="menu-text">

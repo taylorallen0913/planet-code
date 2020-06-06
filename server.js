@@ -7,6 +7,7 @@ const users = require('./routes/api/users');
 const questions = require('./routes/api/questions');
 const correct = require('./routes/api/correct');
 const judge = require('./routes/api/judge');
+const checkout = require('./routes/api/checkout');
 
 const app = express();
 
@@ -38,6 +39,7 @@ app.use('/api/users', users);
 app.use('/api/questions', questions);
 app.use('/api/correct', correct);
 app.use('/api/judge', judge);
+app.use('/api/checkout', checkout);
 
 // For production
 
