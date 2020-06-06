@@ -8,6 +8,7 @@ import questions from './routes/api/questions';
 import correct from './routes/api/correct';
 import judge from './routes/api/judge';
 import checkout from './routes/api/checkout';
+import test from './routes/api/test';
 
 // Config
 import { mongoURI } from './config/keys';
@@ -44,6 +45,7 @@ app.use('/api/questions', questions);
 app.use('/api/correct', correct);
 app.use('/api/judge', judge);
 app.use('/api/checkout', checkout);
+app.use('/api/test', test);
 
 // For production
 
