@@ -6,13 +6,13 @@ const router = express.Router();
 
 router.post('/charge', async (req, res) => {
   try {
-    const { amount, source, receipt_email } = req.body;
+    const { id, amount } = req.body;
 
-    const charge = await stripe.charges.create({
+    const charge = await stripe.paymentIntents.create({
       amount,
-      currency: 'usd',
-      source,
-      receipt_email,
+      currency: 'USD',
+      payment_method: id,
+      confirm: true,
     });
 
     if (!charge) throw new Error('charge unsuccessful');

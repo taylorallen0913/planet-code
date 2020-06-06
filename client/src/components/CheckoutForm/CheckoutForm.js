@@ -1,62 +1,67 @@
 import React, { useState } from 'react';
-import { Form, Input, Button, Row, Col } from 'antd';
+import { Form, Input, Button, Row, Col, Result, Spin } from 'antd';
 import { loadStripe } from '@stripe/stripe-js';
-import { Elements, useStripe, useElements } from '@stripe/react-stripe-js';
-import { Link } from 'react-router-dom';
+import {
+  Elements,
+  useStripe,
+  useElements,
+  CardElement,
+} from '@stripe/react-stripe-js';
+import { LoadingOutlined } from '@ant-design/icons';
 import axios from 'axios';
-import CardForm from '../CardForm';
 
 const layout = {
-  labelCol: { span: 3 },
+  labelCol: { span: 5 },
   wrapperCol: { span: 18 },
 };
 
 const CheckoutForm = ({ success }) => {
-  const [receiptUrl, setReceiptUrl] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const stripe = useStripe();
   const elements = useElements();
 
   const onFinish = async (values) => {
-    console.log('Success:', values);
+    setLoading(true);
+    // console.log(values);
 
-    const { token } = await stripe.createToken({
-      name: 'customer name',
+    if (!stripe || !elements) {
+      return;
+    }
+
+    const cardElement = elements.getElement(CardElement);
+
+    const { error, paymentMethod } = await stripe.createPaymentMethod({
+      type: 'card',
+      card: cardElement,
     });
 
-    const billingDetails = {
-      name: values,
-      email: values,
-      address: {
-        city: values,
-        line1: values,
-        state: values,
-        postal_code: values,
-      },
-    };
+    // const billingDetails = {
+    //   name: values,
+    //   email: values,
+    //   address: {
+    //     city: values,
+    //     line1: values,
+    //     state: values,
+    //     postal_code: values,
+    //   },
+    // };
 
-    const order = await axios.post('http://localhost:5000/api/stripe/charge', {
-      amount: '100'.replace('.', ''),
-      source: token.id,
-      receipt_email: 'customer@example.com',
-    });
-
-    setReceiptUrl(order.data.charge.receipt_url);
+    axios
+      .post('http://localhost:5000/api/checkout/charge', {
+        id: paymentMethod.id,
+        amount: 100,
+      })
+      .then((data) => {
+        console.log(data);
+        success();
+      })
+      .catch((err) => console.log(err));
   };
 
   const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo);
   };
-
-  if (receiptUrl) {
-    return (
-      <div className="success">
-        <h2>Payment Successful!</h2>
-        <a href={receiptUrl}>View Receipt</a>
-        <Link to="/">Home</Link>
-      </div>
-    );
-  }
 
   return (
     <Row>
@@ -109,20 +114,19 @@ const CheckoutForm = ({ success }) => {
             <Input />
           </Form.Item>
 
-          <Form.Item
-            label="Zip"
-            name="zip"
-            rules={[{ required: true, message: 'Please input your zip' }]}
-          >
-            <Input />
+          <Form.Item style={{ margin: '5% 0 5% 15%' }}>
+            <CardElement options={CARD_OPTIONS} />
           </Form.Item>
 
-          <Form.Item style={{ margin: '5% 0 5% 15%' }} label="Card" name="card">
-            <CardForm onFinish={(val) => console.log(val)} />
-          </Form.Item>
+          {loading && (
+            <Spin
+              indicator={<LoadingOutlined style={{ fontSize: 50 }} spin />}
+              style={{ textAlign: 'center', margin: '5% 0 5% 46%' }}
+            />
+          )}
 
           <Button type="primary" htmlType="submit">
-            Submit
+            Purchase
           </Button>
         </Form>
       </Col>
@@ -137,7 +141,13 @@ const CheckoutFormContainer = () => {
   const [status, setStatus] = useState('ready');
 
   if (status === 'success') {
-    return <div>Congrats on your empanadas!</div>;
+    return (
+      <Result
+        status="success"
+        title={<h1>Checkout Successful!</h1>}
+        subTitle={<h3>I have severe autism</h3>}
+      />
+    );
   }
 
   return (
@@ -149,6 +159,26 @@ const CheckoutFormContainer = () => {
       />
     </Elements>
   );
+};
+
+const CARD_OPTIONS = {
+  iconStyle: 'solid',
+  style: {
+    base: {
+      iconColor: '#c4f0ff',
+      color: 'black',
+      fontWeight: 500,
+      fontFamily: 'Roboto, Open Sans, Segoe UI, sans-serif',
+      fontSize: '16px',
+      fontSmoothing: 'antialiased',
+      ':-webkit-autofill': { color: '#fce883' },
+      '::placeholder': { color: '#87bbfd' },
+    },
+    invalid: {
+      iconColor: '#ffc7ee',
+      color: 'black',
+    },
+  },
 };
 
 export default CheckoutFormContainer;
