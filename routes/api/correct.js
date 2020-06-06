@@ -1,7 +1,7 @@
-const express = require('express');
-const router = express.Router();
+import { Router } from 'express';
+import User from '../../models/User';
 
-const User = require('../../models/User');
+const router = Router();
 
 router.post('/', async (req, res) => {
   const userId = req.body.userId;
@@ -25,4 +25,4 @@ router.post('/get', async (req, res) => {
   res.send(correctList);
 });
 
-module.exports = router;
+export default router;

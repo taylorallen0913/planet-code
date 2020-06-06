@@ -1,7 +1,7 @@
-const express = require('express');
-const router = express.Router();
+import { Router } from 'express';
+import Question from '../../models/Question';
 
-const Question = require('../../models/Question');
+const router = Router();
 
 router.get('/get-questions', (req, res) => {
   Question.find((err, data) => {
@@ -16,4 +16,4 @@ router.post('/get-question', (req, res) => {
   });
 });
 
-module.exports = router;
+export default router;

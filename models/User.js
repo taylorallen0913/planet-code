@@ -1,5 +1,4 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+import { Schema, model } from 'mongoose';
 const uuid = require('uuid');
 
 // Create Schema
@@ -38,4 +37,6 @@ const UserSchema = new Schema({
   },
 });
 
-module.exports = User = mongoose.model('users', UserSchema);
+const User = model('users', UserSchema);
+
+export default User;

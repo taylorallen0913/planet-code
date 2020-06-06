@@ -1,13 +1,17 @@
-const express = require('express');
-const path = require('path');
-const cors = require('cors');
-const passport = require('passport');
-const mongoose = require('mongoose');
-const users = require('./routes/api/users');
-const questions = require('./routes/api/questions');
-const correct = require('./routes/api/correct');
-const judge = require('./routes/api/judge');
-const checkout = require('./routes/api/checkout');
+import express from 'express';
+import path from 'path';
+import cors from 'cors';
+import passport from 'passport';
+import mongoose from 'mongoose';
+import users from './routes/api/users';
+import questions from './routes/api/questions';
+import correct from './routes/api/correct';
+import judge from './routes/api/judge';
+import checkout from './routes/api/checkout';
+
+// Config
+import { mongoURI } from './config/keys';
+import passportConfig from './config/passport';
 
 const app = express();
 
@@ -20,7 +24,7 @@ app.use(express.urlencoded({ extended: false }));
 // For development
 app.use(express.static(path.join(__dirname, 'client/build')));
 
-const db = require('./config/keys').mongoAuth;
+const db = mongoURI;
 
 // Connect to MongoDB
 mongoose
@@ -32,7 +36,7 @@ mongoose
 app.use(passport.initialize());
 
 // Passport config
-require('./config/passport')(passport);
+passportConfig(passport);
 
 // Routes
 app.use('/api/users', users);

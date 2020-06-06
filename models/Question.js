@@ -1,5 +1,4 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+import { Schema, model } from 'mongoose';
 
 // Create Schema
 const QuestionSchema = new Schema({
@@ -25,4 +24,6 @@ const QuestionSchema = new Schema({
   },
 });
 
-module.exports = Question = mongoose.model('questions', QuestionSchema);
+const Question = model('questions', QuestionSchema);
+
+export default Question;

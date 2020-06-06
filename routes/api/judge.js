@@ -1,10 +1,10 @@
 require('dotenv').config();
 
-const express = require('express');
-const axios = require('axios');
-const router = express.Router();
+import { Router } from 'express';
+import axios from 'axios';
 
 const RAPIDAPI_KEY = process.env.RAPIDAPI_KEY;
+const router = Router();
 
 // Send submission to api and send token back to user
 router.post('/send-submission', async (req, res) => {
@@ -50,4 +50,4 @@ router.post('/get-submission', async (req, res) => {
     .catch((err) => console.log(err));
 });
 
-module.exports = router;
+export default router;

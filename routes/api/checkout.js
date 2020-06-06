@@ -1,8 +1,8 @@
-const express = require('express');
-const axios = require('axios');
-const { stripeSecret } = require('../../config/keys');
+import { Router } from 'express';
+import { stripeSecret } from '../../config/keys';
+
 const stripe = require('stripe')(stripeSecret);
-const router = express.Router();
+const router = Router();
 
 router.post('/charge', async (req, res) => {
   try {
@@ -28,4 +28,4 @@ router.post('/charge', async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;
