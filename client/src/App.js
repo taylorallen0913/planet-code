@@ -39,7 +39,7 @@ const App = () => {
 
   const getQuestions = () => {
     axios
-      .get('/api/questions/get-questions')
+      .get('/api/questions/get-all')
       .then((res) => {
         setQuestions({ questions: res.data });
       })

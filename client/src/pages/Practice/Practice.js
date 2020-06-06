@@ -33,7 +33,7 @@ const Practice = () => {
 
   const getAllQuestions = () => {
     axios
-      .get('/api/questions/get-questions')
+      .get('/api/questions/get-all')
       .then((res) => {
         setQuestions(res.data);
       })

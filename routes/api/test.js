@@ -1,6 +1,4 @@
 import { Router } from 'express';
-import jwt from 'jsonwebtoken';
-import secretOrKey from '../../config/keys';
 import passport from 'passport';
 
 const router = Router();
