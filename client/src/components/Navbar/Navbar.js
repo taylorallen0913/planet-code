@@ -29,7 +29,7 @@ const Navbar = () => {
             {isAuthenticated && (
               <Menu mode="horizontal">
                 <Menu.Item key="editor" className="menu-no-hover">
-                  <Link to="/editor-demo" className="menu-text">
+                  <Link to="/practice" className="menu-text">
                     Practice
                   </Link>
                 </Menu.Item>
