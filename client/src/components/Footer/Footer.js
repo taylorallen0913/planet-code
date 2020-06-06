@@ -13,8 +13,8 @@ const AppFooter = styled.div`
   left: 0;
   bottom: 0;
   width: 100%;
-  margin-top: 3%;
-  margin-bottom: 2%;
+  margin-top: 1.5%;
+  margin-bottom: 1.5%;
   color: black;
   text-align: center;
 `;

@@ -38,14 +38,7 @@ const Landing = () => {
       <LanguageIconsContainer>
         <LanguageIcons />
       </LanguageIconsContainer>
-      <div
-        style={{
-          backgroundImage: 'linear-gradient(180deg, #FFFFFF 0%, #f2f3fa 100%)',
-          marginBottom: '20%',
-        }}
-      >
-        <div style={{ backgroundColor: 'transparent' }} />
-
+      <GradientContainer>
         <h1
           style={{
             fontSize: '4em',
@@ -64,8 +57,8 @@ const Landing = () => {
             color: '#0B3954',
           }}
         >
-          Planet Code aims to teach the fundamentals of data structure and
-          algorithm to prepare you for programming competitions or interviews
+          Planet Code aims to teach the fundamentals of data structures and
+          algorithms to prepare you for programming competitions or interviews
         </h1>
         <div style={{ marginTop: '5%' }} />
         <CardContainer>
@@ -75,7 +68,7 @@ const Landing = () => {
           <div style={{ marginLeft: '3%', marginRight: '3%' }} />
           <InfoCardThree />
         </CardContainer>
-      </div>
+      </GradientContainer>
       <Footer />
     </LandingContainer>
   );
@@ -120,7 +113,7 @@ const ButtonContainer = styled.div`
 `;
 
 const LanguageIconsContainer = styled.div`
-  margin: 13% 0 7% 0;
+  margin: 11% 0 7% 0;
 `;
 
 const CardContainer = styled.div`
@@ -128,6 +121,11 @@ const CardContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+`;
+
+const GradientContainer = styled.div`
+  background-image: linear-gradient(180deg, #ffffff 0%, #f2f3fa 100%);
+  padding-bottom: 20%;
 `;
 
 // Rows
