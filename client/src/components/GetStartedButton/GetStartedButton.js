@@ -26,6 +26,10 @@ const Button = styled.a`
   color: #ffffff;
   text-align: center;
   transition: all 0.2s;
+
+  @media screen and (max-width: 500px) {
+    font-size: 1em;
+  }
 `;
 
 const ButtonWrapper = styled.div`

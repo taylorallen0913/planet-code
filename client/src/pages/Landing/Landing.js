@@ -31,7 +31,7 @@ const Landing = () => {
         </LeftColumn>
         <RightColumn>
           <DeveloperContainer>
-            <Developer />
+            <DeveloperGraphic />
           </DeveloperContainer>
         </RightColumn>
       </Row>
@@ -39,33 +39,16 @@ const Landing = () => {
         <LanguageIcons />
       </LanguageIconsContainer>
       <GradientContainer>
-        <h1
-          style={{
-            fontSize: '4em',
-            textAlign: 'center',
-            marginLeft: '20%',
-            marginRight: '20%',
-          }}
-        >
-          Progress your skills
-        </h1>
-        <h1
-          style={{
-            textAlign: 'center',
-            marginLeft: '20%',
-            marginRight: '20%',
-            color: '#0B3954',
-          }}
-        >
+        <AboutHeader>Progress your skills</AboutHeader>
+        <AboutSubtext>
           Planet Code aims to teach the fundamentals of data structures and
           algorithms to prepare you for programming competitions or interviews
-        </h1>
-        <div style={{ marginTop: '5%' }} />
+        </AboutSubtext>
         <CardContainer>
           <InfoCardOne />
-          <div style={{ marginLeft: '3%', marginRight: '3%' }} />
+          <CardDivider />
           <InfoCardTwo />
-          <div style={{ marginLeft: '3%', marginRight: '3%' }} />
+          <CardDivider />
           <InfoCardThree />
         </CardContainer>
       </GradientContainer>
@@ -79,6 +62,7 @@ const Landing = () => {
 const LandingContainer = styled.div`
   height: 100%;
   background-image: url(${Background});
+  overflow: hidden;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -117,10 +101,16 @@ const LanguageIconsContainer = styled.div`
 `;
 
 const CardContainer = styled.div`
+  margin: 5% 0 0 0;
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
+
+  @media screen and (max-width: 500px) {
+    display: block;
+    margin: 5% 0 0 10%;
+  }
 `;
 
 const GradientContainer = styled.div`
@@ -166,9 +156,9 @@ const LandingHeader = styled.h1`
   font-size: 400%;
   color: white;
 
-  @media screen and (max-width: 1500px) {
+  @media screen and (max-width: 500px) {
     text-align: center;
-    padding: 0;
+    font-size: 230%;
   }
 `;
 
@@ -178,10 +168,49 @@ const LandingSubtext = styled.h1`
   font-size: 170%;
   color: #dcdcdc;
 
-  @media screen and (max-width: 1500px) {
+  @media screen and (max-width: 500px) {
     text-align: center;
+    font-size: 100%;
     padding: 0;
   }
+`;
+
+const AboutHeader = styled.h1`
+  font-size: 4em;
+  text-align: center;
+  margin-left: 20%;
+  margin-right: 20%;
+
+  @media screen and (max-width: 500px) {
+    margin: 30% 0 5% 0;
+    font-size: 2em;
+  }
+`;
+
+const AboutSubtext = styled.h1`
+  text-align: center;
+  margin-left: 20%;
+  margin-right: 20%;
+  color: #0b3954;
+
+  @media screen and (max-width: 500px) {
+    margin: 5% 0 5% 0;
+    font-size: 1em;
+  }
+`;
+
+// Other
+
+const DeveloperGraphic = styled(Developer)`
+  @media screen and (max-width: 500px) {
+    padding-top: 100px;
+    width: 50%;
+    height: 50%;
+  }
+`;
+
+const CardDivider = styled.div`
+  margin: 0 3% 0 3%;
 `;
 
 export default Landing;

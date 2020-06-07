@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { Card } from 'antd';
+import styled from 'styled-components';
 import { FaChartLine } from 'react-icons/fa';
 
 const InfoCardThree = () => {
   const [hover, setHover] = useState(false);
   return (
-    <Card
+    <CardContainer
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
       hoverable
@@ -25,8 +26,14 @@ const InfoCardThree = () => {
         View your user data which details accuracy, efficiency, and much more
         information.
       </p>
-    </Card>
+    </CardContainer>
   );
 };
+
+const CardContainer = styled(Card)`
+  @media screen and (max-width: 500px) {
+    margin: 6% 0 6% 0;
+  }
+`;
 
 export default InfoCardThree;

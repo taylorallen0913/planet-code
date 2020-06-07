@@ -7,13 +7,13 @@ const LanguageIcons = () => {
   return (
     <LanguageIconContainer>
       <LanguageIcon>
-        <FaPython size="10em" color="#000080" />
+        <PythonIcon />
       </LanguageIcon>
       <LanguageIcon>
-        <FaJava size="10em" color="#000080" />
+        <JavaIcon />
       </LanguageIcon>
       <LanguageIcon>
-        <FaJs size="10em" color="#000080" />
+        <JSIcon />
       </LanguageIcon>
     </LanguageIconContainer>
   );
@@ -28,6 +28,39 @@ const LanguageIconContainer = styled.div`
 
 const LanguageIcon = styled.div`
   padding: 0 5% 0 5%;
+`;
+
+const PythonIcon = styled(FaPython)`
+  width: 10em;
+  height: 10em;
+  color: #000080;
+
+  @media screen and (max-width: 500px) {
+    width: 5em;
+    height: 5em;
+  }
+`;
+
+const JavaIcon = styled(FaJava)`
+  width: 10em;
+  height: 10em;
+  color: #000080;
+
+  @media screen and (max-width: 500px) {
+    width: 5em;
+    height: 5em;
+  }
+`;
+
+const JSIcon = styled(FaJs)`
+  width: 10em;
+  height: 10em;
+  color: #000080;
+
+  @media screen and (max-width: 500px) {
+    width: 5em;
+    height: 5em;
+  }
 `;
 
 export default LanguageIcons;

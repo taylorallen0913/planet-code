@@ -8,6 +8,12 @@ import './styles.css';
 
 const { Title } = Typography;
 
+const unauthenticatedNavbar = () => {
+  return;
+};
+
+const authenticatedNavbar = () => {};
+
 const Navbar = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const [visible, setVisible] = useState(false);
@@ -81,14 +87,6 @@ const Navbar = () => {
               </div>
             }
           >
-            {/* <div className="drawer-label">
-                            <Button type="link">
-                                <Link to="/editor">
-                                    <Title level={3}>Editor</Title>
-                                </Link>
-                            </Button>
-                        </div> */}
-
             <div className="drawer-label">
               <Button type="link">
                 <Link to="/register">
