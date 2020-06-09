@@ -1,117 +1,105 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { Card, Form, Input, Button } from 'antd';
+import { useHistory, Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import styled from 'styled-components';
 import { loginUser } from '../actions/authActions';
-import classnames from 'classnames';
 
-class Login extends Component {
-  constructor() {
-    super();
-    this.state = {
-      email: '',
-      password: '',
-      errors: {},
-    };
-  }
+const Login = () => {
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const errors = useSelector((state) => state.errors);
 
-  componentDidMount() {
-    // If logged in and user navigates to Login page, should redirect them to dashboard
-    if (this.props.auth.isAuthenticated) {
-      this.props.history.push('/dashboard');
-    }
-  }
+  useEffect(() => {
+    if (isAuthenticated) history.push('/dashboard');
+  });
 
-  // eslint-disable-next-line react/no-deprecated
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.auth.isAuthenticated) {
-      this.props.history.push('/dashboard');
-    }
-
-    if (nextProps.errors) {
-      this.setState({
-        errors: nextProps.errors,
-      });
-    }
-  }
-
-  onChange = (e) => {
-    this.setState({ [e.target.id]: e.target.value });
+  const onChange = (e) => {
+    // this.setState({ [e.target.id]: e.target.value });
   };
 
-  onSubmit = (e) => {
-    e.preventDefault();
-
+  const onSubmit = (values) => {
     const userData = {
-      email: this.state.email,
-      password: this.state.password,
+      email: values.email,
+      password: values.password,
     };
 
-    this.props.loginUser(userData);
+    dispatch(loginUser(userData));
   };
 
-  render() {
-    const { errors } = this.state;
+  return (
+    <Container>
+      <FormContainer>
+        <Form onFinish={onSubmit}>
+          <InputContainer>
+            <LoginHeader>Log In to Your Account</LoginHeader>
+            <Form.Item name="email" style={{ margin: 0 }}>
+              <Input placeholder="email" size="large" />
+            </Form.Item>
+            {errors.email || errors.emailnotfound ? (
+              <ErrorText>{errors.email || errors.emailnotfound}</ErrorText>
+            ) : (
+              <div style={{ margin: '5%' }} />
+            )}
+            <Form.Item name="password" style={{ margin: 0 }}>
+              <Input.Password placeholder="password" size="large" />
+            </Form.Item>
+            {errors.password || errors.passwordincorrect ? (
+              <ErrorText>
+                {errors.password || errors.passwordincorrect}
+              </ErrorText>
+            ) : null}
+            <ForgotPassword>Forgot Your Password?</ForgotPassword>
+            <Button type="primary" size="large" htmlType="submit" block>
+              Login
+            </Button>
+            <SignUpContainer>Don't have an account? Sign up</SignUpContainer>
+          </InputContainer>
+        </Form>
+      </FormContainer>
+    </Container>
+  );
+};
 
-    return (
-      <div className="uk-card uk-card-default uk-card-body uk-position-center uk-card-color">
-        <h1 className="uk-margin-medium uk-text-center uk-text-bold">Login</h1>
+const Container = styled.div`
+  margin: 5%;
+`;
+const FormContainer = styled(Card)`
+  margin: auto;
+  width: 600px;
 
-        <h6 className="uk-text-center">
-          Don't have an account?
-          <br />
-          <Link
-            to="/register"
-            style={{ textDecoration: 'none', textDecorationColor: 'black' }}
-          >
-            Create an account
-          </Link>
-        </h6>
-        <form noValidate onSubmit={this.onSubmit}>
-          <input
-            onChange={this.onChange}
-            value={this.state.email}
-            error={errors.email}
-            id="email"
-            type="email"
-            placeholder="Email"
-            className={classnames('uk-input uk-margin-top', {
-              invalid: errors.email || errors.emailnotfound,
-            })}
-          />
-          <span className="red-text">
-            {errors.email}
-            {errors.emailnotfound}
-          </span>
-          <input
-            onChange={this.onChange}
-            value={this.state.password}
-            error={errors.password}
-            id="password"
-            type="password"
-            placeholder="Password"
-            className={classnames('uk-input uk-margin', {
-              invalid: errors.password || errors.passwordincorrect,
-            })}
-          />
-          <span className="red-text">
-            {errors.password}
-            {errors.passwordincorrect}
-          </span>
-          <button
-            className="uk-button uk-button-primary uk-margin"
-            type="submit"
-          >
-            Login
-          </button>
-        </form>
-      </div>
-    );
+  @media screen and (max-width: 500px) {
+    width: 300px;
   }
-}
+`;
 
-const mapStateToProps = (state) => ({
-  auth: state.auth,
-  errors: state.errors,
-});
+const InputContainer = styled.div`
+  width: 80%;
+  margin-left: 10%;
+`;
 
-export default connect(mapStateToProps, { loginUser })(Login);
+const LoginHeader = styled.h1`
+  text-align: center;
+  font-size: 2.5em;
+  margin: 10% 0 13% 0;
+`;
+
+const ForgotPassword = styled(Link)`
+  float: right;
+  margin: 4% 0 15% 0;
+`;
+
+const SignUpContainer = styled(Link)`
+  display: flex;
+  justify-content: center;
+  margin: 5% 0 10% 0;
+`;
+
+const ErrorText = styled.p`
+  color: red;
+  font-size: 1em;
+  padding: 1%;
+`;
+
+export default Login;
