@@ -15,10 +15,6 @@ const Login = () => {
     if (isAuthenticated) history.push('/dashboard');
   });
 
-  const onChange = (e) => {
-    // this.setState({ [e.target.id]: e.target.value });
-  };
-
   const onSubmit = (values) => {
     const userData = {
       email: values.email,
@@ -40,7 +36,7 @@ const Login = () => {
             {errors.email || errors.emailnotfound ? (
               <ErrorText>{errors.email || errors.emailnotfound}</ErrorText>
             ) : (
-              <div style={{ margin: '5%' }} />
+              <div style={{ margin: '3%' }} />
             )}
             <Form.Item name="password" style={{ margin: 0 }}>
               <Input.Password placeholder="password" size="large" />
@@ -52,9 +48,11 @@ const Login = () => {
             ) : null}
             <ForgotPassword>Forgot Your Password?</ForgotPassword>
             <Button type="primary" size="large" htmlType="submit" block>
-              Login
+              Log in
             </Button>
-            <SignUpContainer>Don't have an account? Sign up</SignUpContainer>
+            <SignUpContainer to="/register">
+              Don't have an account? Sign up
+            </SignUpContainer>
           </InputContainer>
         </Form>
       </FormContainer>

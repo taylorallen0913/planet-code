@@ -1,142 +1,121 @@
-import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
-import { connect } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { Card, Form, Input, Button } from 'antd';
+import { useHistory, Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import styled from 'styled-components';
 import { registerUser } from '../actions/authActions';
-import classnames from 'classnames';
 
-class Register extends Component {
-  constructor() {
-    super();
-    this.state = {
-      name: '',
-      email: '',
-      password: '',
-      password2: '',
-      errors: {},
-    };
-  }
+const Register = () => {
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const errors = useSelector((state) => state.errors);
 
-  componentDidMount() {
-    // If logged in and user navigates to Register page, should redirect them to dashboard
-    if (this.props.auth.isAuthenticated) {
-      this.props.history.push('/dashboard');
-    }
-  }
-
-  // eslint-disable-next-line react/no-deprecated
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.errors) {
-      this.setState({
-        errors: nextProps.errors,
-      });
-    }
-  }
-
-  onChange = (e) => {
-    this.setState({ [e.target.id]: e.target.value });
-  };
-
-  onSubmit = (e) => {
-    e.preventDefault();
-
-    const newUser = {
-      name: this.state.name,
-      email: this.state.email,
-      password: this.state.password,
-      password2: this.state.password2,
+  useEffect(() => {
+    if (isAuthenticated) history.push('/dashboard');
+  });
+  const onSubmit = (values) => {
+    const userData = {
+      name: values.name,
+      email: values.email,
+      password: values.password,
+      password2: values.password2,
     };
 
-    this.props.registerUser(newUser, this.props.history);
+    dispatch(registerUser(userData, history));
   };
 
-  render() {
-    const { errors } = this.state;
-
-    return (
-      <div className="uk-card uk-card-default uk-card-body uk-position-center uk-card-color">
-        <h1 className="uk-margin-medium uk-text-center uk-text-bold">
-          Create An Account
-        </h1>
-        <form noValidate onSubmit={this.onSubmit}>
-          <input
-            onChange={this.onChange}
-            value={this.state.name}
-            error={errors.name}
-            id="name"
-            type="name"
-            placeholder="Username"
-            className={classnames(
-              'uk-input uk-form-width-large uk-margin-bottom',
-              {
-                invalid: errors.name,
-              },
+  return (
+    <Container>
+      <FormContainer>
+        <Form onFinish={onSubmit}>
+          <InputContainer>
+            <RegisterHeader>Create an Account</RegisterHeader>
+            <Form.Item name="name" style={{ margin: 0 }}>
+              <Input autoComplete="off" placeholder="username" size="large" />
+            </Form.Item>
+            {errors.name ? (
+              <ErrorText>{errors.name}</ErrorText>
+            ) : (
+              <div style={{ margin: '3%' }} />
             )}
-          />
-          <span className="red-text">{errors.name}</span>
-          <br />
-
-          <input
-            onChange={this.onChange}
-            value={this.state.email}
-            error={errors.email}
-            id="email"
-            type="email"
-            placeholder="Email"
-            className={classnames(
-              'uk-input uk-form-width-large uk-margin-bottom',
-              {
-                invalid: errors.email,
-              },
+            <Form.Item name="email" style={{ margin: 0 }}>
+              <Input autoComplete="off" placeholder="email" size="large" />
+            </Form.Item>
+            {errors.email ? (
+              <ErrorText>{errors.email}</ErrorText>
+            ) : (
+              <div style={{ margin: '3%' }} />
             )}
-          />
-          <span className="red-text">{errors.email}</span>
-          <br />
-
-          <input
-            onChange={this.onChange}
-            value={this.state.password}
-            error={errors.password}
-            id="password"
-            type="password"
-            placeholder="Password"
-            className={classnames(
-              'uk-input uk-form-width-large uk-margin-bottom',
-              {
-                invalid: errors.password,
-              },
+            <Form.Item name="password" style={{ margin: 0 }}>
+              <Input.Password
+                autoComplete="off"
+                placeholder="password"
+                size="large"
+              />
+            </Form.Item>
+            {errors.password2 ? (
+              <ErrorText>{errors.password2}</ErrorText>
+            ) : (
+              <div style={{ margin: '3%' }} />
             )}
-          />
-          <span className="red-text">{errors.password}</span>
-          <br />
+            <Form.Item name="password2" style={{ margin: 0 }}>
+              <Input.Password
+                autoComplete="off"
+                placeholder="confirm password"
+                size="large"
+              />
+            </Form.Item>
+            {errors.password2 ? (
+              <ErrorText>{errors.password2}</ErrorText>
+            ) : null}
+            <div style={{ marginTop: '10%' }} />
+            <Button type="primary" size="large" htmlType="submit" block>
+              Register
+            </Button>
+            <LoginContainer to="/login">
+              Already have an account? Log in
+            </LoginContainer>
+          </InputContainer>
+        </Form>
+      </FormContainer>
+    </Container>
+  );
+};
 
-          <input
-            onChange={this.onChange}
-            value={this.state.password2}
-            error={errors.password2}
-            id="password2"
-            type="password"
-            placeholder="Confirm Password"
-            className={classnames('uk-input uk-form-width-large', {
-              invalid: errors.password2,
-            })}
-          />
-          <span className="red-text">{errors.password2}</span>
+const Container = styled.div`
+  margin: 5%;
+`;
+const FormContainer = styled(Card)`
+  margin: auto;
+  width: 600px;
 
-          <button
-            className="uk-button uk-button-primary uk-margin"
-            type="submit"
-          >
-            Register
-          </button>
-        </form>
-      </div>
-    );
+  @media screen and (max-width: 500px) {
+    width: 300px;
   }
-}
+`;
 
-const mapStateToProps = (state) => ({
-  auth: state.auth,
-  errors: state.errors,
-});
+const InputContainer = styled.div`
+  width: 80%;
+  margin-left: 10%;
+`;
 
-export default connect(mapStateToProps, { registerUser })(withRouter(Register));
+const RegisterHeader = styled.h1`
+  text-align: center;
+  font-size: 2.5em;
+  margin: 10% 0 13% 0;
+`;
+
+const LoginContainer = styled(Link)`
+  display: flex;
+  justify-content: center;
+  margin: 5% 0 10% 0;
+`;
+
+const ErrorText = styled.p`
+  color: red;
+  font-size: 1em;
+  padding: 1%;
+`;
+
+export default Register;
