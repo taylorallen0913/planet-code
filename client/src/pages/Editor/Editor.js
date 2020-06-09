@@ -308,7 +308,7 @@ const SolutionLabelContainer = styled.div`
 `;
 
 const SolutionLabel = styled.h1`
-  font-family: 'Lato', sans-serif;
+  /* font-family: 'Lato', sans-serif; */
   padding-top: 0.9%;
   color: white;
   font-size: 1.7em;

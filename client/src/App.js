@@ -63,24 +63,9 @@ const App = () => {
 
           <Route exact path="/register" component={Register} />
           <Route exact path="/login" component={Login} />
-          <Route exact path="/checkout" component={Checkout} />
-          <Route exact path="/practice/:id" component={Editor} />
-          {questions.length > 0 &&
-            questions.map(({ id, name, question, expected, link }) => (
-              <Route
-                exact
-                path={`/practice/${link}`}
-                render={() => (
-                  <Editor
-                    expectedOutput={expected}
-                    questionName={name}
-                    questionDescription={question}
-                    questionId={id}
-                  />
-                )}
-              />
-            ))}
 
+          <PrivateRoute exact path="/checkout" component={Checkout} />
+          <PrivateRoute exact path="/practice/:id" component={Editor} />
           <PrivateRoute exact path="/dashboard" component={Dashboard} />
           <PrivateRoute exact path="/practice" component={Practice} />
           <Route component={NoRouteMatch} />
