@@ -51,7 +51,7 @@ const TabContainer = styled.div`
 const Tab = styled.div`
   width: 100px;
   height: 100%;
-  padding-top: 1.5%;
+  padding-top: 1.8%;
 `;
 
 const TabTitle = styled.div`

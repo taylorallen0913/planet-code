@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 
 const QuestionSolution = ({ question }) => {
-  console.log(question);
   return (
     <Container>
       <Header>{question.name}</Header>

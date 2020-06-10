@@ -26,7 +26,6 @@ const Editor = (props) => {
   const [questionDataLoaded, setQuestionDataLoaded] = useState(false);
   const [currentLanguage, setCurrentLanguage] = useState(0);
   const [solutionByLanguage, setSolutionByLanguage] = useState({});
-  const [codeRunning, setCodeRunning] = useState(false);
 
   useEffect(() => {
     setData();
@@ -159,6 +158,7 @@ const Editor = (props) => {
   const formatSolution = () => {
     let template = parseCode(getCurrentLanguageTemplate());
     template = template.replace('{code}', getCurrentLanguageSolution());
+    template = template.split('{input}').join('5');
     return template;
   };
 
@@ -233,20 +233,17 @@ const Editor = (props) => {
                   />
                 </Solution>
 
-                {codeRunning ? (
-                  <Output>
-                    <OutputHeader>
-                      <OutputLabel>Output</OutputLabel>
-                    </OutputHeader>
-                    <OutputBox readOnly id="output-box" />
-                  </Output>
-                ) : null}
+                <Output>
+                  <OutputHeader>
+                    <OutputLabel>Output</OutputLabel>
+                  </OutputHeader>
+                  <OutputBox readOnly id="output-box" />
+                </Output>
                 <OutputMenu>
                   <Button
                     type="primary"
                     size="large"
                     onClick={() => {
-                      setCodeRunning(true);
                       createSubmission();
                     }}
                   >
@@ -341,7 +338,7 @@ const OutputMenu = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  margin-top: 5%;
+  margin-top: 1%;
 `;
 
 export default Editor;
