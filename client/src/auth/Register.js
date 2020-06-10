@@ -15,8 +15,10 @@ const Register = () => {
   useEffect(() => {
     if (isAuthenticated) history.push('/dashboard');
 
-    return () => dispatch(clearErrors());
-  });
+    return () => {
+      dispatch(clearErrors());
+    };
+  }, []);
 
   const onSubmit = (values) => {
     const userData = {

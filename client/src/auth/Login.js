@@ -16,7 +16,7 @@ const Login = () => {
     if (isAuthenticated) history.push('/dashboard');
 
     return () => dispatch(clearErrors());
-  });
+  }, []);
 
   const onSubmit = (values) => {
     const userData = {
@@ -24,7 +24,7 @@ const Login = () => {
       password: values.password,
     };
 
-    dispatch(loginUser(userData));
+    dispatch(loginUser(userData, history));
   };
 
   return (
@@ -67,6 +67,7 @@ const Login = () => {
 const Container = styled.div`
   margin: 5%;
 `;
+
 const FormContainer = styled(Card)`
   margin: auto;
   width: 600px;
