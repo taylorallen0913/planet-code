@@ -1,13 +1,36 @@
-import {} from '../actions/types';
+import {
+  CLEAR_EDITOR_DATA,
+  SET_QUESTION_DATA,
+  SET_CURRENT_LANGUAGE,
+  UPDATE_CURRENT_CODE,
+} from '../actions/types';
 
-const initialState = {};
+const initialState = {
+  questionData: '',
+  code: {},
+  currentLanguage: 0,
+};
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    // case GET_ERRORS:
-    //   return action.payload;
-    // case CLEAR_ERRORS:
-    //   return {};
+    case CLEAR_EDITOR_DATA:
+      return {};
+    case SET_QUESTION_DATA:
+      return {
+        ...state,
+        code: action.payload.code.placeholders,
+        questionData: action.payload,
+      };
+    case SET_CURRENT_LANGUAGE:
+      return {
+        ...state,
+        currentLanguage: action.payload,
+      };
+    case UPDATE_CURRENT_CODE:
+      return {
+        ...state,
+        code: { ...state.code, ...action.payload },
+      };
     default:
       return state;
   }

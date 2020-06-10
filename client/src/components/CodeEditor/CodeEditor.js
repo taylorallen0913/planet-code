@@ -2,9 +2,21 @@ import React, { useState, useEffect } from 'react';
 import AceEditor from 'react-ace';
 import produce from 'immer';
 import axios from 'axios';
-import { parseCode, getLanguage, getApiLanguageID } from '../../utils/editor';
+import styled from 'styled-components';
+import { useDispatch, useSelector } from 'react-redux';
+import { Row, Col, Select, Button } from 'antd';
+import {
+  parseCode,
+  getLanguageFromID,
+  getApiLanguageID,
+} from '../../utils/editor';
 import { getQuestionData } from '../../utils/question';
 import { compareStrings } from '../../utils/comparison';
+import {
+  setQuestionData,
+  setCurrentLanguage,
+  updateCurrentCode,
+} from '../../redux/actions/editorActions';
 
 import 'ace-builds/src-noconflict/mode-python';
 import 'ace-builds/src-noconflict/mode-java';
@@ -15,18 +27,20 @@ import 'ace-builds/src-noconflict/theme-twilight';
 import 'ace-builds/src-noconflict/ext-language_tools';
 
 const CodeEditor = ({ id }) => {
-  const [questionData, setQuestionData] = useState();
+  const questionData = useSelector((state) => state.editor.questionData);
+  const currentLanguage = useSelector((state) => state.editor.currentLanguage);
   const [questionDataLoaded, setQuestionDataLoaded] = useState(false);
-  const [currentLanguage, setCurrentLanguage] = useState(0);
   const [solutionByLanguage, setSolutionByLanguage] = useState({});
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
+    dispatch(setQuestionData(id.match.params.id));
     setData();
   }, []);
 
   const setData = async () => {
     const questionData = await getQuestionData(id.match.params.id);
-    setQuestionData(questionData);
     setQuestionDataLoaded(true);
     parsePlaceholderCode(questionData.code.placeholders);
   };
@@ -38,15 +52,6 @@ const CodeEditor = ({ id }) => {
       code[`${placeholder}`] = parsedCode;
     });
     setSolutionByLanguage(code);
-  };
-
-  const onCodeChange = (val) => {
-    setSolutionByLanguage(
-      produce(solutionByLanguage, (solutionByLanguageCopy) => {
-        const language = getLanguage(currentLanguage).toLowerCase();
-        solutionByLanguageCopy[`${language}`] = val;
-      }),
-    );
   };
 
   const createSubmission = async () => {
@@ -100,10 +105,6 @@ const CodeEditor = ({ id }) => {
       ).value = `${output.message}\n\n${output.stderr}`;
   };
 
-  const onLanguageChange = (val) => {
-    setCurrentLanguage(val);
-  };
-
   const getCurrentLanguageSolution = () => {
     let code;
     switch (currentLanguage) {
@@ -150,12 +151,12 @@ const CodeEditor = ({ id }) => {
 
   const getTheme = () => {
     let theme;
-    switch (getLanguage(currentLanguage).toLowerCase()) {
+    switch (getLanguageFromID(currentLanguage).toLowerCase()) {
       case 'c++':
         theme = 'c_cpp';
         break;
       default:
-        theme = getLanguage(currentLanguage).toLowerCase();
+        theme = getLanguageFromID(currentLanguage).toLowerCase();
         break;
     }
     return theme;
@@ -168,31 +169,37 @@ const CodeEditor = ({ id }) => {
     return template;
   };
 
+  const onCodeChange = (code) => {
+    dispatch(updateCurrentCode(currentLanguage, code));
+  };
+
   return (
     <div>
-      {questionDataLoaded ? (
-        <AceEditor
-          style={{
-            width: '100%',
-          }}
-          height={450}
-          mode={getTheme()}
-          theme="twilight"
-          name="blah2"
-          onChange={onCodeChange}
-          fontSize={15}
-          showPrintMargin={false}
-          showGutter
-          highlightActiveLine
-          value={getCurrentLanguageSolution()}
-          setOptions={{
-            enableBasicAutocompletion: true,
-            enableLiveAutocompletion: true,
-            enableSnippets: false,
-            showLineNumbers: true,
-            tabSize: 4,
-          }}
-        />
+      {questionData ? (
+        <div>
+          <AceEditor
+            style={{
+              width: '100%',
+            }}
+            height={670}
+            mode={getTheme()}
+            theme="twilight"
+            name="blah2"
+            onChange={onCodeChange}
+            fontSize={15}
+            showPrintMargin={false}
+            showGutter
+            highlightActiveLine
+            value={getCurrentLanguageSolution()}
+            setOptions={{
+              enableBasicAutocompletion: true,
+              enableLiveAutocompletion: true,
+              enableSnippets: false,
+              showLineNumbers: true,
+              tabSize: 4,
+            }}
+          />
+        </div>
       ) : null}
     </div>
   );

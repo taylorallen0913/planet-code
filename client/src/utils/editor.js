@@ -5,7 +5,7 @@ export const parseCode = (code) => {
   return parsedCode;
 };
 
-export const getLanguage = (id) => {
+export const getLanguageFromID = (id) => {
   let language = '';
   switch (id) {
     case 1:
@@ -48,6 +48,32 @@ export const getApiLanguageID = (id) => {
       break;
     default:
       language = -1;
+      break;
+  }
+  return language;
+};
+
+export const getReduxLanguageByID = (id) => {
+  let language = '';
+  switch (id) {
+    case 1:
+      // Python 3
+      language = 'python';
+      break;
+    case 2:
+      // Java
+      language = 'java';
+      break;
+    case 3:
+      // C++
+      language = 'c++';
+      break;
+    case 4:
+      // JS
+      language = 'javascript';
+      break;
+    default:
+      language = '';
       break;
   }
   return language;

@@ -1,20 +1,22 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useSelector } from 'react-redux';
 import { parseText } from '../../utils/question';
 
-const QuestionStatement = ({ question }) => {
+const QuestionStatement = () => {
+  const questionData = useSelector((state) => state.editor.questionData);
   return (
     <Container>
-      <Header>{question.name}</Header>
+      <Header>{questionData.name}</Header>
       <StatementContainer>
-        <StatementBody readOnly value={parseText(question.question)} />
+        <StatementBody readOnly value={parseText(questionData.question)} />
       </StatementContainer>
     </Container>
   );
 };
 
 const Container = styled.div`
-  height: 725px;
+  height: 670px;
   background: #141414;
   overflow: hidden;
 `;
@@ -36,7 +38,7 @@ const StatementBody = styled.textarea`
   box-sizing: border-box;
   margin: 2% 0 0 2.5%;
   color: #dcdcdc;
-  font-size: 1.5em;
+  font-size: 1.2em;
 `;
 
 export default QuestionStatement;

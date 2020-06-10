@@ -13,6 +13,7 @@ const QuestionSolution = ({ question }) => {
 };
 
 const Container = styled.div`
+  height: 670px;
   background: #141414;
   overflow: hidden;
 `;
@@ -28,7 +29,7 @@ const SolutionContainer = styled.div``;
 const SolutionBody = styled.p`
   width: 95%;
   color: #dcdcdc;
-  font-size: 1.5em;
+  font-size: 1.2em;
 `;
 
 export default QuestionSolution;
