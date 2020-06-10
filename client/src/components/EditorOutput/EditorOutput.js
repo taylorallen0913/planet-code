@@ -4,22 +4,9 @@ import styled from 'styled-components';
 
 const EditorOutput = () => {
   return (
-    <div>
-      <Output>
-        <OutputBox readOnly />
-      </Output>
-      <OutputMenu>
-        <Button
-          type="primary"
-          size="large"
-          onClick={() => {
-            // createSubmission();
-          }}
-        >
-          Run Code
-        </Button>
-      </OutputMenu>
-    </div>
+    <Output>
+      <OutputBox readOnly />
+    </Output>
   );
 };
 
@@ -34,13 +21,4 @@ const OutputBox = styled.textarea`
   width: 100%;
   font-family: courier new;
 `;
-
-const OutputMenu = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  margin-top: 1%;
-`;
-
 export default EditorOutput;

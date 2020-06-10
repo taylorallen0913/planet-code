@@ -110,6 +110,13 @@ const CodeEditor = ({ id }) => {
     return code;
   };
 
+  const formatSolution = () => {
+    let template = parseCode(getCurrentLanguageTemplate());
+    template = template.replace('{code}', getCurrentLanguageSolution());
+    template = template.split('{input}').join('5');
+    return template;
+  };
+
   const getTheme = () => {
     let theme;
     switch (getLanguageFromID(currentLanguage).toLowerCase()) {
@@ -121,13 +128,6 @@ const CodeEditor = ({ id }) => {
         break;
     }
     return theme;
-  };
-
-  const formatSolution = () => {
-    let template = parseCode(getCurrentLanguageTemplate());
-    template = template.replace('{code}', getCurrentLanguageSolution());
-    template = template.split('{input}').join('5');
-    return template;
   };
 
   const onCodeChange = (code) => {

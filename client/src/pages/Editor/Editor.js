@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 import styled from 'styled-components';
 
-import { Row, Col, Select, Button } from 'antd';
+import { Row, Col } from 'antd';
 import QuestionPanel from '../../components/QuestionPanel';
 import EditorPanel from '../../components/EditorPanel';
 
@@ -17,7 +17,7 @@ const Editor = (props) => {
             <QuestionPanel />
           </Left>
         </Col>
-        <Col flex={6}>
+        <Col flex={10}>
           <Right>
             <div>
               <Solution>
