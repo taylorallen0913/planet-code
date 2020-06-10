@@ -6,7 +6,7 @@ const QuestionSolution = ({ question }) => {
     <Container>
       <Header>{question.name}</Header>
       <SolutionContainer>
-        <SolutionBody>Solution placeholder</SolutionBody>
+        <SolutionBody readOnly value={'Solution placeholders'} />
       </SolutionContainer>
     </Container>
   );
@@ -26,8 +26,14 @@ const Header = styled.h1`
 
 const SolutionContainer = styled.div``;
 
-const SolutionBody = styled.p`
+const SolutionBody = styled.textarea`
+  resize: none;
+  border: none;
+  background: inherit;
   width: 95%;
+  height: 570px;
+  box-sizing: border-box;
+  margin: 2% 0 0 2.5%;
   color: #dcdcdc;
   font-size: 1.2em;
 `;

@@ -32,7 +32,6 @@ export const setCurrentLanguage = (language) => (dispatch) => {
 export const updateCurrentCode = (language, code) => (dispatch) => {
   let obj = {};
   obj[getReduxLanguageByID(language)] = code;
-  console.log(obj);
   dispatch({
     type: UPDATE_CURRENT_CODE,
     payload: obj,

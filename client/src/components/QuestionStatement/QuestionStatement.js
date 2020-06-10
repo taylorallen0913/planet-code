@@ -34,7 +34,7 @@ const StatementBody = styled.textarea`
   border: none;
   background: inherit;
   width: 95%;
-  height: 650px;
+  height: 570px;
   box-sizing: border-box;
   margin: 2% 0 0 2.5%;
   color: #dcdcdc;

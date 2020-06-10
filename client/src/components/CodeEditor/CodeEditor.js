@@ -29,30 +29,13 @@ import 'ace-builds/src-noconflict/ext-language_tools';
 const CodeEditor = ({ id }) => {
   const questionData = useSelector((state) => state.editor.questionData);
   const currentLanguage = useSelector((state) => state.editor.currentLanguage);
-  const [questionDataLoaded, setQuestionDataLoaded] = useState(false);
-  const [solutionByLanguage, setSolutionByLanguage] = useState({});
+  const code = useSelector((state) => state.editor.code);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(setQuestionData(id.match.params.id));
-    setData();
   }, []);
-
-  const setData = async () => {
-    const questionData = await getQuestionData(id.match.params.id);
-    setQuestionDataLoaded(true);
-    parsePlaceholderCode(questionData.code.placeholders);
-  };
-
-  const parsePlaceholderCode = (placeholders) => {
-    const code = { python: '', java: '', 'c++': '', javascript: '' };
-    Object.keys(placeholders).forEach((placeholder) => {
-      const parsedCode = parseCode(placeholders[placeholder]);
-      code[`${placeholder}`] = parsedCode;
-    });
-    setSolutionByLanguage(code);
-  };
 
   const createSubmission = async () => {
     const languageID = getApiLanguageID(currentLanguage);
@@ -105,28 +88,6 @@ const CodeEditor = ({ id }) => {
       ).value = `${output.message}\n\n${output.stderr}`;
   };
 
-  const getCurrentLanguageSolution = () => {
-    let code;
-    switch (currentLanguage) {
-      case 1:
-        code = solutionByLanguage.python;
-        break;
-      case 2:
-        code = solutionByLanguage.java;
-        break;
-      case 3:
-        code = solutionByLanguage['c++'];
-        break;
-      case 4:
-        code = solutionByLanguage.javascript;
-        break;
-      default:
-        code = 'Please select a language.';
-        break;
-    }
-    return code;
-  };
-
   const getCurrentLanguageTemplate = () => {
     let code;
     switch (currentLanguage) {
@@ -173,9 +134,31 @@ const CodeEditor = ({ id }) => {
     dispatch(updateCurrentCode(currentLanguage, code));
   };
 
+  const getCurrentLanguageSolution = () => {
+    let codeValue;
+    switch (currentLanguage) {
+      case 1:
+        codeValue = parseCode(code.python);
+        break;
+      case 2:
+        codeValue = parseCode(code.java);
+        break;
+      case 3:
+        codeValue = parseCode(code['c++']);
+        break;
+      case 4:
+        codeValue = parseCode(code.javascript);
+        break;
+      default:
+        codeValue = 'Please select a language.';
+        break;
+    }
+    return codeValue;
+  };
+
   return (
     <div>
-      {questionData ? (
+      {questionData && code ? (
         <div>
           <AceEditor
             style={{
