@@ -1,10 +1,7 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-
 import React, { useState, useEffect } from 'react';
 
 import AceEditor from 'react-ace';
 import styled from 'styled-components';
-// import { useSelector } from 'react-redux';
 import axios from 'axios';
 import produce from 'immer';
 import { Row, Col, Select, Button } from 'antd';
@@ -25,16 +22,10 @@ import './styles.css';
 const { Option } = Select;
 
 const Editor = (props) => {
-  // const user = useSelector((state) => state.auth.user);
   const [questionData, setQuestionData] = useState();
   const [questionDataLoaded, setQuestionDataLoaded] = useState(false);
-  // const [token, setToken] = useState();
   const [currentLanguage, setCurrentLanguage] = useState(0);
   const [solutionByLanguage, setSolutionByLanguage] = useState({});
-  // const [expectedOutput, setExpectedOutput] = useState(props.expected);
-  // const [questionDescription, setQuestionDescription] = useState(
-  // props.questionDescription
-  // );
   const [codeRunning, setCodeRunning] = useState(false);
 
   useEffect(() => {
@@ -112,7 +103,6 @@ const Editor = (props) => {
     setSolutionByLanguage(
       produce(solutionByLanguage, (solutionByLanguageCopy) => {
         const language = getLanguage(currentLanguage).toLowerCase();
-        // eslint-disable-next-line no-param-reassign
         solutionByLanguageCopy[`${language}`] = val;
       }),
     );
@@ -189,21 +179,10 @@ const Editor = (props) => {
     <div>
       {questionDataLoaded ? (
         <Row>
-          <Col flex={3}>
-            <Question />
-            {/* <div className="question">
-                            <h1 className="question-name">
-                                {questionData.name}
-                            </h1>
-                            <p className="question-description">
-                                {questionDescription}
-                            </p>
-                            <br />
-                            <br />
-                            <br />
-                            <br />
-                            <p className="question-description">{props.hint}</p>
-                        </div> */}
+          <Col>
+            <Left>
+              <Question questionData={questionData} />
+            </Left>
           </Col>
           <Col flex={6}>
             <Right>
@@ -211,7 +190,7 @@ const Editor = (props) => {
                 <Solution>
                   <SolutionHeader>
                     <SolutionLabelContainer>
-                      <SolutionLabel>Solution</SolutionLabel>
+                      <SolutionLabel>Code</SolutionLabel>
                       <LanguageSelector>
                         <Select
                           bordered={false}
@@ -283,14 +262,19 @@ const Editor = (props) => {
   );
 };
 
-// const Left = styled.div``;
+const Left = styled.div`
+  padding-top: 1em;
+  padding-left: 1em;
+  padding-right: 1em;
+  width: 100%;
+`;
 
 const Right = styled.div`
   margin-right: 1%;
 `;
 
 const Solution = styled.div`
-  padding-top: 1%;
+  padding-top: 1em;
 `;
 
 const SolutionHeader = styled.div`
@@ -308,7 +292,6 @@ const SolutionLabelContainer = styled.div`
 `;
 
 const SolutionLabel = styled.h1`
-  /* font-family: 'Lato', sans-serif; */
   padding-top: 0.9%;
   color: white;
   font-size: 1.7em;
