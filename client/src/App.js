@@ -6,7 +6,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import jwtDecode from 'jwt-decode';
 import setAuthToken from './utils/setAuthToken';
 
-import { setCurrentUser, logoutUser } from './actions/authActions';
+import { setCurrentUser, logoutUser } from './redux/actions/authActions';
 import { Provider } from 'react-redux';
 import store from './store';
 

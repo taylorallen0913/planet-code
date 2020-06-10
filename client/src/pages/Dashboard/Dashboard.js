@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { logoutUser } from '../../actions/authActions';
+import { logoutUser } from '../../redux/actions/authActions';
 
 import './styles.css';
 

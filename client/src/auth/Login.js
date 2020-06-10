@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Card, Form, Input, Button } from 'antd';
 import { useHistory, Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import { loginUser } from '../actions/authActions';
+import { loginUser } from '../redux/actions/authActions';
+import { clearErrors } from '../redux/actions/errorActions';
 
 const Login = () => {
   const history = useHistory();
@@ -13,6 +14,8 @@ const Login = () => {
 
   useEffect(() => {
     if (isAuthenticated) history.push('/dashboard');
+
+    return () => dispatch(clearErrors());
   });
 
   const onSubmit = (values) => {
@@ -30,6 +33,7 @@ const Login = () => {
         <Form onFinish={onSubmit}>
           <InputContainer>
             <LoginHeader>Log In to Your Account</LoginHeader>
+
             <Form.Item name="email" style={{ margin: 0 }}>
               <Input placeholder="email" size="large" />
             </Form.Item>

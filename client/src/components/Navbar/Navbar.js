@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Button, Affix, Menu, Drawer, Typography } from 'antd';
 import { UpOutlined, MenuOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
-import { logoutUser } from '../../actions/authActions';
+import { logoutUser } from '../../redux/actions/authActions';
 
 import './styles.css';
 
