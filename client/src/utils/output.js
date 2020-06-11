@@ -10,12 +10,20 @@ export const formatSolution = (currentLanguage, questionData, code) => {
     '{code}',
     getCurrentLanguageSolution(currentLanguage, code),
   );
-  template = template.split('{input}').join('5');
+  template = template.split('{input}').join('3');
+  console.log(template);
   return template;
 };
 
 export const checkOutput = (output, questionData) => {
-  return compareStrings(output.stdout, questionData.expected);
+  let passing = true;
+  console.log(output);
+  if (typeof questionData.expected === 'object') {
+    questionData.expected.forEach((expected) => {
+      passing = compareStrings(output.stdout, expected) || passing;
+    });
+  } else return compareStrings(output.stdout, questionData.expected);
+  return passing;
 };
 
 export const getCurrentLanguageTemplate = (currentLanguage, questionData) => {
@@ -28,7 +36,7 @@ export const getCurrentLanguageTemplate = (currentLanguage, questionData) => {
       code = questionData.code.templates.java;
       break;
     case 3:
-      code = questionData.code.templates['c++'];
+      code = questionData.code.templates['cpp'];
       break;
     case 4:
       code = questionData.code.templates.javascript;
@@ -50,7 +58,7 @@ export const getCurrentLanguageSolution = (currentLanguage, code) => {
       codeValue = parseCode(code.java);
       break;
     case 3:
-      codeValue = parseCode(code['c++']);
+      codeValue = parseCode(code['cpp']);
       break;
     case 4:
       codeValue = parseCode(code.javascript);

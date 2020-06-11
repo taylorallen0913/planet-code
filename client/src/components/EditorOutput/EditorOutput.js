@@ -6,10 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 import {
   setOutput,
-  clearOutput,
   setOutputLoadingStatus,
-  setOutputErrors,
-  clearOutputErrors,
 } from '../../redux/actions/outputActions';
 import { getApiLanguageID } from '../../utils/language';
 import { formatSolution, checkOutput } from '../../utils/output';
@@ -47,7 +44,7 @@ const EditorOutput = () => {
       .then((res) => {
         setTimeout(() => {
           getSubmission(res.data);
-        }, 2000);
+        }, 4000);
       })
       .catch((err) => console.log(err));
   };
