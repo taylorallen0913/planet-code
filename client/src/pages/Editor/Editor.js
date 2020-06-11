@@ -16,7 +16,6 @@ import './styles.css';
 
 const Editor = (props) => {
   const dispatch = useDispatch();
-  // console.log(props);
   useEffect(() => {
     dispatch(setQuestionData(props.match.params.id));
     return () => {

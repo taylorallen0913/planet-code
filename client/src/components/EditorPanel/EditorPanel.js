@@ -8,6 +8,10 @@ import LanguageSelector from '../LanguageSelector';
 import { PlayCircleFilled } from '@ant-design/icons';
 import { updateEditorMenuSelection } from '../../redux/actions/editorActions';
 import { setOutputLoadingStatus } from '../../redux/actions/outputActions';
+import {
+  clearOutput,
+  clearOutputErrors,
+} from '../../redux/actions/outputActions';
 
 const EditorPanel = ({ id }) => {
   const dispatch = useDispatch();
@@ -55,6 +59,8 @@ const EditorPanel = ({ id }) => {
               icon={<PlayCircleFilled />}
               type="link"
               onClick={() => {
+                dispatch(clearOutput());
+                dispatch(clearOutputErrors());
                 dispatch(updateEditorMenuSelection(1));
                 dispatch(setOutputLoadingStatus(true));
               }}
