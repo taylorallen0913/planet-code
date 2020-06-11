@@ -111,7 +111,7 @@ const Loading = styled(Spin)`
 
 const OutputBox = styled.textarea`
   resize: none;
-  height: 670px;
+  height: 600px;
   background-color: #000;
   border: 1px solid #000;
   color: #00ff00;

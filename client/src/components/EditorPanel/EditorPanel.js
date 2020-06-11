@@ -49,9 +49,9 @@ const EditorPanel = ({ id }) => {
             <LanguageSelectorContainer>
               <LanguageSelector />
             </LanguageSelectorContainer>
-            <RunButton
+            <Button
               type="primary"
-              size="large"
+              size="medium"
               icon={<PlayCircleFilled />}
               type="link"
               onClick={() => {
@@ -60,12 +60,12 @@ const EditorPanel = ({ id }) => {
               }}
             >
               Run code
-            </RunButton>
+            </Button>
           </EditorMenu>
         )}
         {editorMenuSelection === 1 && (
           <EditorMenu>
-            <RunButton
+            <Button
               type="primary"
               size="large"
               icon={<PlayCircleFilled />}
@@ -76,7 +76,7 @@ const EditorPanel = ({ id }) => {
               }}
             >
               Run code
-            </RunButton>
+            </Button>
           </EditorMenu>
         )}
       </TabContainer>
@@ -88,18 +88,18 @@ const EditorPanel = ({ id }) => {
 const TabContainer = styled.div`
   display: flex;
   flex-direction: row;
-  height: 60px;
+  height: 50px;
   background: #444444;
 `;
 
 const Tab = styled.div`
-  width: 100px;
+  width: 85px;
   height: 100%;
-  padding-top: 1.3em;
+  padding-top: 1em;
 `;
 
 const TabTitle = styled.div`
-  font-size: 1.2em;
+  font-size: 1em;
   text-align: center;
   color: #dcdcdc;
   cursor: default;
@@ -108,14 +108,12 @@ const TabTitle = styled.div`
 const EditorMenu = styled.div`
   display: flex;
   margin-left: auto;
-  margin-top: 0.75em;
-  width: 300px;
+  margin-top: 0.7em;
+  width: 270px;
 `;
 
-const RunButton = styled(Button)``;
-
 const LanguageSelectorContainer = styled.div`
-  margin-top: 1.2%;
+  margin-top: -0.05em;
 `;
 
 export default EditorPanel;

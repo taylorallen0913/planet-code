@@ -13,7 +13,7 @@ const QuestionSolution = ({ question }) => {
 };
 
 const Container = styled.div`
-  height: 670px;
+  height: 600px;
   background: #141414;
   overflow: hidden;
 `;
@@ -31,7 +31,7 @@ const SolutionBody = styled.textarea`
   border: none;
   background: inherit;
   width: 95%;
-  height: 570px;
+  height: 500px;
   box-sizing: border-box;
   margin: 2% 0 0 2.5%;
   color: #dcdcdc;

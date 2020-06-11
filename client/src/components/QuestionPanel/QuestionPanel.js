@@ -50,19 +50,18 @@ const Container = styled.div`
 const TabContainer = styled.div`
   display: flex;
   flex-direction: row;
-  height: 60px;
+  height: 50px;
   background: #444444;
 `;
 
 const Tab = styled.div`
-  width: 100px;
+  width: 85px;
   height: 100%;
-  padding-top: 1.8%;
+  padding-top: 1em;
 `;
 
 const TabTitle = styled.div`
-  margin-top: 4.5%;
-  font-size: 1.2em;
+  font-size: 1em;
   text-align: center;
   color: #dcdcdc;
   cursor: default;

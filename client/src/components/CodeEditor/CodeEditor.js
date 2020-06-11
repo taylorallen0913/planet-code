@@ -30,89 +30,6 @@ const CodeEditor = ({ id }) => {
     dispatch(setQuestionData(id.match.params.id));
   }, []);
 
-  const createSubmission = async () => {
-    const languageID = getApiLanguageID(currentLanguage);
-    await axios
-      .post(
-        '/api/judge/send-submission',
-        {
-          language_id: languageID,
-          source_code: formatSolution(),
-          expected_output: questionData.expected,
-        },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        },
-      )
-      .then((res) => {
-        setTimeout(() => {
-          getSubmission(res.data);
-        }, 2000);
-      })
-      .catch((err) => console.log(err));
-  };
-
-  const getSubmission = async (token) => {
-    await axios
-      .post(
-        '/api/judge/get-submission',
-        {
-          token,
-        },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        },
-      )
-      .then((res) => checkOutput(res.data))
-      .catch((err) => console.log(err));
-  };
-
-  const checkOutput = (output) => {
-    const passed = compareStrings(output.stdout, questionData.expected);
-    if (passed)
-      document.getElementById('output-box').value = 'Passed all test cases.';
-    else
-      document.getElementById(
-        'output-box',
-      ).value = `${output.message}\n\n${output.stderr}`;
-  };
-
-  const getCurrentLanguageTemplate = () => {
-    let code;
-    switch (currentLanguage) {
-      case 1:
-        code = questionData.code.templates.python;
-        break;
-      case 2:
-        code = questionData.code.templates.java;
-        break;
-      case 3:
-        code = questionData.code.templates['c++'];
-        break;
-      case 4:
-        code = questionData.code.templates.javascript;
-        break;
-      default:
-        code = 'Please select a language.';
-        break;
-    }
-    return code;
-  };
-
-  const formatSolution = () => {
-    let template = parseCode(getCurrentLanguageTemplate());
-    template = template.replace(
-      '{code}',
-      getCurrentLanguageSolution(currentLanguage, code),
-    );
-    template = template.split('{input}').join('5');
-    return template;
-  };
-
   const getTheme = () => {
     let theme;
     switch (getLanguageFromID(currentLanguage).toLowerCase()) {
@@ -138,7 +55,7 @@ const CodeEditor = ({ id }) => {
             style={{
               width: '100%',
             }}
-            height={670}
+            height={600}
             mode={getTheme()}
             theme="twilight"
             name="blah2"
