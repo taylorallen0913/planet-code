@@ -61,13 +61,10 @@ const EditorPanel = ({ id }) => {
               icon={<PlayCircleFilled />}
               type="link"
               onClick={() => {
-                if (currentLanguage !== 0) {
-                  dispatch(clearOutput());
-                  dispatch(clearOutputErrors());
-                  dispatch(updateEditorMenuSelection(1));
-                  dispatch(setOutputLoadingStatus(true));
-                }
-                alert('Please select a language.');
+                dispatch(clearOutput());
+                dispatch(clearOutputErrors());
+                dispatch(updateEditorMenuSelection(1));
+                dispatch(setOutputLoadingStatus(true));
               }}
             >
               Run code

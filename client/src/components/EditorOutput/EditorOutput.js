@@ -24,7 +24,7 @@ const EditorOutput = () => {
   const output = useSelector((state) => state.output.value);
 
   useEffect(() => {
-    if (loading && currentLanguage !== 0) createSubmission();
+    if (loading) createSubmission();
   }, []);
 
   const createSubmission = async () => {
