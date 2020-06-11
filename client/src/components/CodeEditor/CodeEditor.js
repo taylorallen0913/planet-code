@@ -1,11 +1,8 @@
 import React, { useEffect } from 'react';
 import AceEditor from 'react-ace';
-import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
-import { parseCode } from '../../utils/parsing';
-import { getLanguageFromID, getApiLanguageID } from '../../utils/language';
+import { getLanguageFromID } from '../../utils/language';
 import { getCurrentLanguageSolution } from '../../utils/output';
-import { compareStrings } from '../../utils/comparison';
 import {
   setQuestionData,
   updateCurrentCode,

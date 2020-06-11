@@ -67,7 +67,7 @@ const EditorPanel = ({ id }) => {
           <EditorMenu>
             <Button
               type="primary"
-              size="large"
+              size="medium"
               icon={<PlayCircleFilled />}
               type="link"
               onClick={() => {

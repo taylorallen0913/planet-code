@@ -5,9 +5,7 @@ const QuestionSolution = ({ question }) => {
   return (
     <Container>
       <Header>{question.name}</Header>
-      <SolutionContainer>
-        <SolutionBody readOnly value={'Solution placeholders'} />
-      </SolutionContainer>
+      <SolutionBody readOnly value={'Solution placeholders'} />
     </Container>
   );
 };
@@ -22,9 +20,8 @@ const Header = styled.h1`
   margin: 2% 0 0 0;
   text-align: center;
   color: white;
+  font-size: 1.7em;
 `;
-
-const SolutionContainer = styled.div``;
 
 const SolutionBody = styled.textarea`
   resize: none;
@@ -35,7 +32,7 @@ const SolutionBody = styled.textarea`
   box-sizing: border-box;
   margin: 2% 0 0 2.5%;
   color: #dcdcdc;
-  font-size: 1.2em;
+  font-size: 1.1em;
 `;
 
 export default QuestionSolution;

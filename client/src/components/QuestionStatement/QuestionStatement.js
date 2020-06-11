@@ -8,9 +8,7 @@ const QuestionStatement = () => {
   return (
     <Container>
       <Header>{questionData.name}</Header>
-      <StatementContainer>
-        <StatementBody readOnly value={parseText(questionData.question)} />
-      </StatementContainer>
+      <StatementBody readOnly value={parseText(questionData.question)} />
     </Container>
   );
 };
@@ -25,9 +23,8 @@ const Header = styled.h1`
   margin: 2% 0 0 0;
   text-align: center;
   color: white;
+  font-size: 1.7em;
 `;
-
-const StatementContainer = styled.div``;
 
 const StatementBody = styled.textarea`
   resize: none;
@@ -38,7 +35,7 @@ const StatementBody = styled.textarea`
   box-sizing: border-box;
   margin: 2% 0 0 2.5%;
   color: #dcdcdc;
-  font-size: 1.2em;
+  font-size: 1.1em;
 `;
 
 export default QuestionStatement;
