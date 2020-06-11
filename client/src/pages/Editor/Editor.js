@@ -6,6 +6,7 @@ import { Row, Col } from 'antd';
 import { useDispatch } from 'react-redux';
 import QuestionPanel from '../../components/QuestionPanel';
 import EditorPanel from '../../components/EditorPanel';
+import { setQuestionData } from '../../redux/actions/editorActions';
 import {
   clearOutput,
   clearOutputErrors,
@@ -15,8 +16,9 @@ import './styles.css';
 
 const Editor = (props) => {
   const dispatch = useDispatch();
-
+  // console.log(props);
   useEffect(() => {
+    dispatch(setQuestionData(props.match.params.id));
     return () => {
       dispatch(clearOutput());
       dispatch(clearOutputErrors());

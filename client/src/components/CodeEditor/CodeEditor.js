@@ -23,9 +23,7 @@ const CodeEditor = ({ id }) => {
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(setQuestionData(id.match.params.id));
-  }, []);
+  useEffect(() => {}, []);
 
   const getTheme = () => {
     let theme;
