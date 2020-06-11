@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button } from 'antd';
@@ -57,7 +57,6 @@ const EditorPanel = ({ id }) => {
               onClick={() => {
                 dispatch(updateEditorMenuSelection(1));
                 dispatch(setOutputLoadingStatus(true));
-                // createSubmission();
               }}
             >
               Run code
@@ -74,7 +73,6 @@ const EditorPanel = ({ id }) => {
               onClick={() => {
                 dispatch(updateEditorMenuSelection(1));
                 dispatch(setOutputLoadingStatus(true));
-                // createSubmission();
               }}
             >
               Run code
@@ -97,11 +95,10 @@ const TabContainer = styled.div`
 const Tab = styled.div`
   width: 100px;
   height: 100%;
-  padding-top: 1.8%;
+  padding-top: 1.3em;
 `;
 
 const TabTitle = styled.div`
-  margin-top: -0.4em;
   font-size: 1.2em;
   text-align: center;
   color: #dcdcdc;
@@ -111,7 +108,7 @@ const TabTitle = styled.div`
 const EditorMenu = styled.div`
   display: flex;
   margin-left: auto;
-  margin-top: 0.75%;
+  margin-top: 0.75em;
   width: 300px;
 `;
 
