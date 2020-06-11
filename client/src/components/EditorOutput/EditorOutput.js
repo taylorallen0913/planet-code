@@ -8,6 +8,8 @@ import {
   setOutput,
   clearOutput,
   setOutputLoadingStatus,
+  setOutputErrors,
+  clearOutputErrors,
 } from '../../redux/actions/outputActions';
 import { getApiLanguageID } from '../../utils/language';
 import { formatSolution, checkOutput } from '../../utils/output';
@@ -19,13 +21,13 @@ const EditorOutput = () => {
   const currentLanguage = useSelector((state) => state.editor.currentLanguage);
   const code = useSelector((state) => state.editor.code);
   const questionData = useSelector((state) => state.editor.questionData);
+  const output = useSelector((state) => state.output.value);
 
   useEffect(() => {
     if (loading) createSubmission();
   }, []);
 
   const createSubmission = async () => {
-    dispatch(setOutputLoadingStatus(false));
     const languageID = getApiLanguageID(currentLanguage);
 
     await axios
@@ -64,14 +66,24 @@ const EditorOutput = () => {
         },
       )
       .then((res) => {
+        dispatch(setOutputLoadingStatus(false));
         const passing = checkOutput(res.data, questionData);
-        if (passing) console.log(passing);
-        else {
-          console.log(res.data);
-          console.log('no');
-        }
+        if (passing)
+          dispatch(setOutput('Your solution passed all test cases!'));
+        else setErrors(res.data);
       })
       .catch((err) => console.log(err));
+  };
+
+  const setErrors = (output) => {
+    console.log(output);
+    const message = `${output.status.description}\n\n${output.message}\n\n\n${output.stderr}`;
+    dispatch(setOutput(message));
+  };
+
+  const formatErrors = (errors) => {
+    // const message = `${errors.}`
+    // setOutput()
   };
 
   return (
@@ -82,7 +94,7 @@ const EditorOutput = () => {
           size="large"
         />
       ) : null}
-      <OutputBox readOnly />
+      <OutputBox value={output} readOnly />
     </OutputContainer>
   );
 };
@@ -104,6 +116,7 @@ const OutputBox = styled.textarea`
   border: 1px solid #000;
   color: #00ff00;
   width: 100%;
+  padding: 2em;
   font-family: courier new;
 `;
 

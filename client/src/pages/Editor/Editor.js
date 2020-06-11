@@ -1,33 +1,45 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import styled from 'styled-components';
 
 import { Row, Col } from 'antd';
+import { useDispatch } from 'react-redux';
 import QuestionPanel from '../../components/QuestionPanel';
 import EditorPanel from '../../components/EditorPanel';
+import {
+  clearOutput,
+  clearOutputErrors,
+} from '../../redux/actions/outputActions';
 
 import './styles.css';
 
 const Editor = (props) => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    return () => {
+      dispatch(clearOutput());
+      dispatch(clearOutputErrors());
+    };
+  }, []);
+
   return (
-    <div>
-      <Row>
-        <Col>
-          <Left>
-            <QuestionPanel />
-          </Left>
-        </Col>
-        <Col flex={10}>
-          <Right>
-            <div>
-              <Solution>
-                <EditorPanel id={props} />
-              </Solution>
-            </div>
-          </Right>
-        </Col>
-      </Row>
-    </div>
+    <Row>
+      <Col>
+        <Left>
+          <QuestionPanel />
+        </Left>
+      </Col>
+      <Col flex={10}>
+        <Right>
+          <div>
+            <Solution>
+              <EditorPanel id={props} />
+            </Solution>
+          </div>
+        </Right>
+      </Col>
+    </Row>
   );
 };
 
