@@ -3,12 +3,14 @@ import {
   SET_QUESTION_DATA,
   SET_CURRENT_LANGUAGE,
   UPDATE_CURRENT_CODE,
+  UPDATE_EDITOR_MENU_SELECTION,
 } from '../actions/types';
 
 const initialState = {
   questionData: '',
   code: {},
   currentLanguage: 0,
+  editorMenuSelection: 0,
 };
 
 export default (state = initialState, action) => {
@@ -30,6 +32,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         code: { ...state.code, ...action.payload },
+      };
+    case UPDATE_EDITOR_MENU_SELECTION:
+      return {
+        ...state,
+        editorMenuSelection: action.payload,
       };
     default:
       return state;

@@ -31,7 +31,7 @@ const CheckoutForm = ({ success }) => {
 
     const cardElement = elements.getElement(CardElement);
 
-    const { error, paymentMethod } = await stripe.createPaymentMethod({
+    const { paymentMethod } = await stripe.createPaymentMethod({
       type: 'card',
       card: cardElement,
     });

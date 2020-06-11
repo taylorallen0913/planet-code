@@ -3,9 +3,10 @@ import {
   SET_QUESTION_DATA,
   SET_CURRENT_LANGUAGE,
   UPDATE_CURRENT_CODE,
+  UPDATE_EDITOR_MENU_SELECTION,
 } from '../actions/types';
 import { getQuestionData } from '../../utils/question';
-import { getReduxLanguageByID } from '../../utils/editor';
+import { getReduxLanguageByID } from '../../utils/language';
 
 export const clearEditorData = () => (dispatch) => {
   dispatch({
@@ -35,5 +36,12 @@ export const updateCurrentCode = (language, code) => (dispatch) => {
   dispatch({
     type: UPDATE_CURRENT_CODE,
     payload: obj,
+  });
+};
+
+export const updateEditorMenuSelection = (selection) => (dispatch) => {
+  dispatch({
+    type: UPDATE_EDITOR_MENU_SELECTION,
+    payload: selection,
   });
 };

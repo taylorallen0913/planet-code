@@ -5,68 +5,85 @@ import { Button } from 'antd';
 import CodeEditor from '../CodeEditor';
 import EditorOutput from '../EditorOutput';
 import LanguageSelector from '../LanguageSelector';
-import {
-  parseCode,
-  getLanguageFromID,
-  getApiLanguageID,
-} from '../../utils/editor';
-import { getQuestionData } from '../../utils/question';
-import { compareStrings } from '../../utils/comparison';
-import {
-  setQuestionData,
-  setCurrentLanguage,
-  updateCurrentCode,
-} from '../../redux/actions/editorActions';
-import { FaPlay } from 'react-icons/fa';
 import { PlayCircleFilled } from '@ant-design/icons';
+import { updateEditorMenuSelection } from '../../redux/actions/editorActions';
+import { setOutputLoadingStatus } from '../../redux/actions/outputActions';
 
 const EditorPanel = ({ id }) => {
   const dispatch = useDispatch();
-  const [selected, setSelected] = useState(1);
+
+  const editorMenuSelection = useSelector(
+    (state) => state.editor.editorMenuSelection,
+  );
 
   const DisplaySection = () => {
-    if (selected === 1) return <CodeEditor id={id} />;
-    if (selected === 2) return <EditorOutput />;
+    if (editorMenuSelection === 0) return <CodeEditor id={id} />;
+    if (editorMenuSelection === 1) return <EditorOutput />;
   };
 
   return (
-    <>
+    <div>
       <TabContainer>
         <Tab
-          style={selected === 1 ? { background: '#7D7C7A' } : null}
-          onClick={() => setSelected(1)}
+          style={editorMenuSelection === 0 ? { background: '#7D7C7A' } : null}
+          onClick={() => dispatch(updateEditorMenuSelection(0))}
         >
-          <TabTitle style={selected === 1 ? { color: 'white' } : null}>
+          <TabTitle
+            style={editorMenuSelection === 0 ? { color: 'white' } : null}
+          >
             Editor
           </TabTitle>
         </Tab>
         <Tab
-          style={selected === 2 ? { background: '#7D7C7A' } : null}
-          onClick={() => setSelected(2)}
+          style={editorMenuSelection === 1 ? { background: '#7D7C7A' } : null}
+          onClick={() => dispatch(updateEditorMenuSelection(1))}
         >
-          <TabTitle style={selected === 2 ? { color: 'white' } : null}>
+          <TabTitle
+            style={editorMenuSelection === 1 ? { color: 'white' } : null}
+          >
             Output
           </TabTitle>
         </Tab>
-        <EditorMenu>
-          <LanguageSelectorContainer>
-            <LanguageSelector />
-          </LanguageSelectorContainer>
-          <RunButton
-            type="primary"
-            size="large"
-            icon={<PlayCircleFilled />}
-            type="link"
-            onClick={() => {
-              // createSubmission();
-            }}
-          >
-            Run code
-          </RunButton>
-        </EditorMenu>
+        {editorMenuSelection === 0 && (
+          <EditorMenu>
+            <LanguageSelectorContainer>
+              <LanguageSelector />
+            </LanguageSelectorContainer>
+            <RunButton
+              type="primary"
+              size="large"
+              icon={<PlayCircleFilled />}
+              type="link"
+              onClick={() => {
+                dispatch(updateEditorMenuSelection(1));
+                dispatch(setOutputLoadingStatus(true));
+                // createSubmission();
+              }}
+            >
+              Run code
+            </RunButton>
+          </EditorMenu>
+        )}
+        {editorMenuSelection === 1 && (
+          <EditorMenu>
+            <RunButton
+              type="primary"
+              size="large"
+              icon={<PlayCircleFilled />}
+              type="link"
+              onClick={() => {
+                dispatch(updateEditorMenuSelection(1));
+                dispatch(setOutputLoadingStatus(true));
+                // createSubmission();
+              }}
+            >
+              Run code
+            </RunButton>
+          </EditorMenu>
+        )}
       </TabContainer>
       <DisplaySection />
-    </>
+    </div>
   );
 };
 

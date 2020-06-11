@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Select } from 'antd';
 import { setCurrentLanguage } from '../../redux/actions/editorActions';
-import { getLanguageFromID } from '../../utils/editor';
+import { getLanguageFromID } from '../../utils/language';
 
 const { Option } = Select;
 

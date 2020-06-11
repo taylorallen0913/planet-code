@@ -1,6 +1,4 @@
-import React, { useState, useEffect } from 'react';
-
-import axios from 'axios';
+import React from 'react';
 
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import jwtDecode from 'jwt-decode';
@@ -35,23 +33,6 @@ if (localStorage.jwtToken) {
 }
 
 const App = () => {
-  const [questions, setQuestions] = useState([]);
-
-  const getQuestions = () => {
-    axios
-      .get('/api/questions/get-all')
-      .then((res) => {
-        setQuestions({ questions: res.data });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  useEffect(() => {
-    getQuestions();
-  }, []);
-
   return (
     <Provider store={store}>
       <Router>

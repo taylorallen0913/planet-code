@@ -1,20 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import AceEditor from 'react-ace';
-import produce from 'immer';
 import axios from 'axios';
-import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
-import { Row, Col, Select, Button } from 'antd';
-import {
-  parseCode,
-  getLanguageFromID,
-  getApiLanguageID,
-} from '../../utils/editor';
-import { getQuestionData } from '../../utils/question';
+import { parseCode } from '../../utils/parsing';
+import { getLanguageFromID, getApiLanguageID } from '../../utils/language';
+import { getCurrentLanguageSolution } from '../../utils/output';
 import { compareStrings } from '../../utils/comparison';
 import {
   setQuestionData,
-  setCurrentLanguage,
   updateCurrentCode,
 } from '../../redux/actions/editorActions';
 
@@ -112,7 +105,10 @@ const CodeEditor = ({ id }) => {
 
   const formatSolution = () => {
     let template = parseCode(getCurrentLanguageTemplate());
-    template = template.replace('{code}', getCurrentLanguageSolution());
+    template = template.replace(
+      '{code}',
+      getCurrentLanguageSolution(currentLanguage, code),
+    );
     template = template.split('{input}').join('5');
     return template;
   };
@@ -134,28 +130,6 @@ const CodeEditor = ({ id }) => {
     dispatch(updateCurrentCode(currentLanguage, code));
   };
 
-  const getCurrentLanguageSolution = () => {
-    let codeValue;
-    switch (currentLanguage) {
-      case 1:
-        codeValue = parseCode(code.python);
-        break;
-      case 2:
-        codeValue = parseCode(code.java);
-        break;
-      case 3:
-        codeValue = parseCode(code['c++']);
-        break;
-      case 4:
-        codeValue = parseCode(code.javascript);
-        break;
-      default:
-        codeValue = 'Please select a language.';
-        break;
-    }
-    return codeValue;
-  };
-
   return (
     <div>
       {questionData && code ? (
@@ -173,7 +147,7 @@ const CodeEditor = ({ id }) => {
             showPrintMargin={false}
             showGutter
             highlightActiveLine
-            value={getCurrentLanguageSolution()}
+            value={getCurrentLanguageSolution(currentLanguage, code)}
             setOptions={{
               enableBasicAutocompletion: true,
               enableLiveAutocompletion: true,
