@@ -24,7 +24,7 @@ const EditorOutput = () => {
   const output = useSelector((state) => state.output.value);
 
   useEffect(() => {
-    if (loading) createSubmission();
+    if (loading && currentLanguage !== 0) createSubmission();
   }, []);
 
   const createSubmission = async () => {
@@ -76,14 +76,12 @@ const EditorOutput = () => {
   };
 
   const setErrors = (output) => {
-    console.log(output);
-    const message = `${output.status.description}\n\n${output.message}\n\n\n${output.stderr}`;
-    dispatch(setOutput(message));
-  };
-
-  const formatErrors = (errors) => {
-    // const message = `${errors.}`
-    // setOutput()
+    const { description } = output.status;
+    const { message } = output;
+    const value = `${description ? description : ''}\n\n${
+      message ? message : ''
+    }`;
+    dispatch(setOutput(value));
   };
 
   return (
@@ -116,7 +114,8 @@ const OutputBox = styled.textarea`
   border: 1px solid #000;
   color: #00ff00;
   width: 100%;
-  padding: 2em;
+  padding: 1em;
+  font-size: 1.2em;
   font-family: courier new;
 `;
 

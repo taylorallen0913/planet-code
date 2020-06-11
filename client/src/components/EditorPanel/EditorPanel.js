@@ -16,6 +16,8 @@ import {
 const EditorPanel = ({ id }) => {
   const dispatch = useDispatch();
 
+  const currentLanguage = useSelector((state) => state.editor.currentLanguage);
+
   const editorMenuSelection = useSelector(
     (state) => state.editor.editorMenuSelection,
   );
@@ -59,10 +61,13 @@ const EditorPanel = ({ id }) => {
               icon={<PlayCircleFilled />}
               type="link"
               onClick={() => {
-                dispatch(clearOutput());
-                dispatch(clearOutputErrors());
-                dispatch(updateEditorMenuSelection(1));
-                dispatch(setOutputLoadingStatus(true));
+                if (currentLanguage !== 0) {
+                  dispatch(clearOutput());
+                  dispatch(clearOutputErrors());
+                  dispatch(updateEditorMenuSelection(1));
+                  dispatch(setOutputLoadingStatus(true));
+                }
+                alert('Please select a language.');
               }}
             >
               Run code

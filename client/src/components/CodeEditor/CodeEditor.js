@@ -16,14 +16,12 @@ import 'ace-builds/src-noconflict/theme-github';
 import 'ace-builds/src-noconflict/theme-twilight';
 import 'ace-builds/src-noconflict/ext-language_tools';
 
-const CodeEditor = ({ id }) => {
+const CodeEditor = () => {
   const questionData = useSelector((state) => state.editor.questionData);
   const currentLanguage = useSelector((state) => state.editor.currentLanguage);
   const code = useSelector((state) => state.editor.code);
 
   const dispatch = useDispatch();
-
-  useEffect(() => {}, []);
 
   const getTheme = () => {
     let theme;
