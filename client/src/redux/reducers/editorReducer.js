@@ -9,7 +9,7 @@ import {
 const initialState = {
   questionData: '',
   code: {},
-  currentLanguage: 0,
+  currentLanguage: 1,
   editorMenuSelection: 0,
 };
 
